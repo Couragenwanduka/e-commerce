@@ -1,18 +1,18 @@
 import './App.css';
-import LOGO from './components/Logo'
-import HEADER from './components/Header'
-import FOOTER from './components/Footer'
-import LOGOINFORM from './components/LoginForm'
+import LOGO from './components/Logo.jsx'
+import FOOTER from './components/Footer.jsx'
+import LOGOINFORM from './components/LoginForm.jsx'
 
-function Login(){
+
+function Signin(){
     return(
-        <div>
+        <>
             <LOGO />
-            {/* <HEADER /> */}
             <LOGOINFORM />
             <FOOTER />
-        </div>
+            </>
+       
     )
 }
 
-export default Login;
+export default Signin;
