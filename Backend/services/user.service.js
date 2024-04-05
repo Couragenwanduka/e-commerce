@@ -30,3 +30,13 @@ export const findAllUsers = async()=>{
         throw new Error("An error occurred while retrieving the users"+ error)
     }
 }
+
+export const findAllAdmins=async()=>{
+    try{
+        const users = await User.find({role:'admin'});
+        return users;
+    }catch(error){
+        console.log(error);
+        throw new Error("An error occurred while retrieving the users"+ error)
+    }
+}

@@ -1,11 +1,11 @@
 import { BrowserRouter , Routes, Route} from "react-router-dom";
 // import NoPage from "./pages/NoPage";
-import Signup from './signup.jsx';
-import App from './App.jsx';
-import Signin from './Login.jsx'
-import Lp from "./LandingPage.jsx";
+import Signup from './pages/signup.jsx';
+import App from './pages/App.jsx';
+import Signin from './pages/Login.jsx'
+import Lp from "./pages/LandingPage.jsx";
 
- function Main() {
+ function ROUTER() {
     return (
         <BrowserRouter>
         <Routes>
@@ -20,4 +20,4 @@ import Lp from "./LandingPage.jsx";
     );
 }
  
-export default Main;
+export default ROUTER;

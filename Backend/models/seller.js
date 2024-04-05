@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const UserShema= new mongoose.Schema({
+const sellerSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -13,13 +13,15 @@ const UserShema= new mongoose.Schema({
         type:String,
         required:true
     },
-    role:{
-       type:String,
-       required:true,
-       enum:['admin', 'user'],
+    companyName:{
+        type:String,
+        required:true
+    },
+    companyAddress:{
+        type:String,
+        required:true
     }
-})
 
-const User=mongoose.model('User',UserShema);
+});
 
-export default User;
+const Seller=mongoose.model('Seller',sellerSchema);

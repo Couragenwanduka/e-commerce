@@ -1,7 +1,7 @@
-import './App.css';
-import LOGO from './components/Logo'
-import FOOTER from './components/Footer'
-import FORM from './components/Form';
+import '../App.css';
+import LOGO from '../components/Logo'
+import FOOTER from '../components/Footer'
+import FORM from '../components/Form';
 
 
 
