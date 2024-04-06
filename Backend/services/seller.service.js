@@ -1,4 +1,4 @@
-import Seller from '../models/seller';
+import Seller from '../models/seller.js';
 import { hashPassword } from '../config/bcrypt.js';
 
 export const saveSeller = async (name, email, password, companyName, companyAddress) => {

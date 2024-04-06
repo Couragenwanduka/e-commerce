@@ -1,6 +1,10 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import fs from 'fs';
+import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Load environment variables from .env file
 dotenv.config();
@@ -20,7 +24,8 @@ const transporter = nodemailer.createTransport({
 export const sendMail = async (otp, email) => {
     try {
         // Read HTML template file
-        const htmlTemplate = await fs.promises.readFile('../helpers/mail.html', 'utf-8');
+        const htmlTemplate = await fs.promises.readFile(path.join(__dirname, '../helper', 'mail.html'), 'utf-8');
+        
 
         // Replace placeholder {{OTP}} with actual OTP value
         const formattedHtml = htmlTemplate.replace('{{OTP}}', otp);
@@ -32,8 +37,6 @@ export const sendMail = async (otp, email) => {
             subject: "MarketMate OTP", // Subject line
             html: formattedHtml, // HTML body
         });
-
-        console.log("Email sent: " + info.response);
     } catch (error) {
         console.error("Error sending email:", error);
         throw new Error("An error occurred while sending the email: " + error);

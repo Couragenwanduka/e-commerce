@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-import axios from 'axios'; // Import Axios
+import axios from 'axios'; 
 
 function FORM(){
     const [name, setName] = useState('');

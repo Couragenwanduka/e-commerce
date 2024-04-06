@@ -4,6 +4,10 @@ import Signup from './pages/signup.jsx';
 import App from './pages/App.jsx';
 import Signin from './pages/Login.jsx'
 import Lp from "./pages/LandingPage.jsx";
+import EMAILVERIFICATION from "./pages/EmailVerification.jsx";
+import OTPVERIFICATION from "./pages/OtpVerification.jsx";
+import SELLERPAGE from "./pages/SellerPage.jsx";
+import ADMINPAGE from "./pages/AdminP.jsx";
 
  function ROUTER() {
     return (
@@ -14,6 +18,10 @@ import Lp from "./pages/LandingPage.jsx";
                  <Route path="/Loggedin" element={<App/>}/>
                 <Route path="/sign-up" element={<Signup />} />
                 <Route path="/sign-in" element={<Signin />} />
+                <Route path="/email-verification" element={<EMAILVERIFICATION />} />
+                <Route path="/otp-verification" element={<OTPVERIFICATION />} />
+                <Route path="/seller-Registration" element={<SELLERPAGE />} />
+                <Route path="/admin" element={<ADMINPAGE />} />
             </Route>
         </Routes>
     </BrowserRouter>

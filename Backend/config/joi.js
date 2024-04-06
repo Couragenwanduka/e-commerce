@@ -22,7 +22,6 @@ const productSchema = joi.object({
 
 const sellerSchema = joi.object({
     name:joi.string().required(),
-    email: joi.string().email().required(),
     password: joi.string().min(8).required(),
     companyName:joi.string().required(),
     companyAddress:joi.string().required()
