@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Seller from './seller.js';
 
 const ProductSchema= new mongoose.Schema({
     category:{
@@ -27,8 +28,8 @@ const ProductSchema= new mongoose.Schema({
    }],
    seller:{
     type:mongoose.Schema.Types.ObjectId,
-    // ref:'User',
-    // required:true
+    ref:'Seller',
+    required:true
    }
 });
 

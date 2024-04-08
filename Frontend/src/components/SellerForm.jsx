@@ -78,6 +78,8 @@ const handleSubmit=async(e)=>{
                     </button>
                    
                 </div>
+                {successMessage && <div className="ml-64 text-black">{successMessage}</div>}
+                {errorMessage && <div className="ml-96 text-black">{errorMessage}</div>}
             </form>
         </div>
     )

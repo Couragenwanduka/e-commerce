@@ -3,6 +3,7 @@ import LOGO from '../components/Logo'
 import HEADER from '../components/Header'
 import FOOTER from '../components/Footer'
 import CATEGORIES from '../components/Category'
+import SHOWALLPRODUCTS from '../components/showProduct';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <LOGO/>
       <HEADER/>
       < CATEGORIES/>
+      <SHOWALLPRODUCTS />
       <FOOTER />
       
     </div>

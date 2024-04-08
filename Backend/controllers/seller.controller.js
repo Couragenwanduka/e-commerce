@@ -2,7 +2,8 @@ import {saveSeller,findSellerByEmail} from '../services/seller.service.js';
 import {generateOtp} from '../helper/otps.js';
 import {sendMail} from '../config/nodemailer.js'
 import {verifyCookie} from '../helper/jwt.decode.js'
-import {validateSellerSchema} from '../config/joi.js'
+import {comparePassword} from '../config/bcrypt.js'
+import {validateSellerSchema,validateSellerLogin} from '../config/joi.js'
 import jwt from 'jsonwebtoken'
 
 export const validateEmail = async(req,res) =>{
@@ -85,3 +86,27 @@ export const registerSeller = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
+
+export const loginUser = async(req,res) =>{
+    try{
+     const {email,password} = req.body;
+     const valid= validateSellerLogin(email,password)
+     if(!valid){
+        return res.status(400).json({message:"Invalid username or password"+valid.message.error})
+     }
+     const user= await findSellerByEmail(email)
+     if(!user){
+        return res.status(400).json({message:"User does not exist please Sign up"+valid.message.error})
+     }
+     const isMatch= await comparePassword(password,user)
+     if(!isMatch){
+        return res.status(400).json({message:"Invalid username or password"+valid.message.error})
+     }
+     const payload={user}
+     const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'1d'})
+     return res.status(200).json({message:"user successfully login",token:token})
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}
+

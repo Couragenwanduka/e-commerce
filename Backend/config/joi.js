@@ -26,6 +26,19 @@ const sellerSchema = joi.object({
     companyName:joi.string().required(),
     companyAddress:joi.string().required()
 });
+const sellerLogin= joi.object({
+    email: joi.string().email().required(),
+    password: joi.string().min(8).required(),
+})
+
+export const validateSellerLogin=(email,password)=>{
+    try{
+        const result= sellerLogin.validate(email,password);
+        return result;
+    }catch(error){
+        return error;
+    }
+}
 
 export const validateSellerSchema =(name,email,password,companyName,companyAddress)=>{
     try{

@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
-
-
+import Modal from 'react-modal'
 import axios from 'axios'; 
-
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: '#f4f4f4',
+        padding: '30px',
+        borderRadius: '10px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
+        width: '400px',
+        maxWidth: '90%',
+        textAlign: 'center'
+    },
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    }
+};
 function FORM(){
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [modalIsOpen,setIsOpen] = useState(false);
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -34,15 +53,16 @@ function FORM(){
             });
 
             // Handle success response
-            console.log('Registration successful:', response.data);
+           
             setSuccessMessage(response.data.message);
             setErrorMessage(response.data.error)
+            setIsOpen(true);
             setTimeout(()=>{
                 window.location.href='/sign-in';
             },2000)
         } catch (error) {
-            // Handle error
-            console.error('Registration failed:', error);
+            setIsOpen(true);
+        setErrorMessage(error.response.data.message)
         }
     };
 
@@ -75,10 +95,19 @@ function FORM(){
                     onChange={handlePasswordChange}
                 />
                 <button type="submit" className="p-4 mt-3 bg-amber-500 w-32 ml-96">Submit</button>
-                {successMessage&&<div className="ml-96 text-green-600">{successMessage}</div>}
-                {errorMessage&&<div className="ml-96 text-green-600">{errorMessage}</div>}
                 <p>if you have an account <a> Click to Login</a></p>
             </form>
+            <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={() => setIsOpen(false)}
+            style={customStyles}
+            contentLabel="Example Modal">
+                <div>
+                <button onClick={() => setIsOpen(false)} className="bg-black text-base text-white font-medium">close</button>
+                    {successMessage && <div className="text-black text-5xl font-sans font-medium">{successMessage}</div>}
+                    {errorMessage && <div className="text-black text-5xl font-sans font-medium">{errorMessage}</div>}
+                </div>
+            </Modal>
         </div>
     );
 }

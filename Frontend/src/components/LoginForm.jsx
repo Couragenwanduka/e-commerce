@@ -1,12 +1,36 @@
-import axios from 'axios'
+import axios from 'axios';
 import { useState } from 'react';
-
+import Modal from 'react-modal';
+import { useCookies } from 'react-cookie';
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: '#f4f4f4',
+        padding: '30px',
+        borderRadius: '10px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
+        width: '400px',
+        maxWidth: '90%',
+        textAlign: 'center'
+    },
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    }
+};
 
 function LOGINFORM(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [modalIsOpen,setIsOpen] = useState(false);
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+
 
     const handleEmailChange=(e)=>{
         setEmail(e.target.value);
@@ -22,6 +46,14 @@ function LOGINFORM(){
             email,
             password
          })
+         setSuccessMessage(response.data.message);
+         setErrorMessage(response.data.error);
+         setIsOpen(true);
+         const token = response.data.token;
+    
+         // Set the 'token' cookie with the value of the token variable
+         setCookie('token', token, { path: '/' });
+        
          setTimeout(()=>{
             if(response.data.user.role== 'admin'){
                 window.location.href='/sign-up'
@@ -30,7 +62,8 @@ function LOGINFORM(){
             }
          })
         }catch(error){
-
+         setErrorMessage(error.response.data.message)
+         setIsOpen(true);
         }
     }
     return(
@@ -55,6 +88,17 @@ function LOGINFORM(){
                 {successMessage&&<div className="ml-96 text-green-600">{successMessage}</div>}
                 {errorMessage&&<div className="ml-96 text-green-600">{errorMessage}</div>}
             </form>
+            <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={() => setIsOpen(false)}
+            style={customStyles}
+            contentLabel="Example Modal">
+                <div>
+                <button onClick={() => setIsOpen(false)} className="bg-black text-base text-white font-medium">close</button>
+                    {successMessage && <div className="text-black text-5xl font-sans font-medium">{successMessage}</div>}
+                    {errorMessage && <div className="text-black text-5xl font-sans font-medium">{errorMessage}</div>}
+                </div>
+            </Modal>
         </div>
     )
 }

@@ -1,12 +1,33 @@
 import { useState } from "react";
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-
+import Modal from 'react-modal'
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: '#f4f4f4',
+        padding: '30px',
+        borderRadius: '10px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
+        width: '400px',
+        maxWidth: '90%',
+        textAlign: 'center'
+    },
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    }
+};
 const EmailForm= ()=>{
     const[email,setEmail]=useState('');
     const [successMessage, setSuccessMessage]=useState('');
     const [errorMessage, setErrorMessage]=useState('');
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
+    const [modalIsOpen,setIsOpen] = useState(false);
 
     const handleEmailChange=(e)=>{
        setEmail(e.target.value)
@@ -21,7 +42,7 @@ const EmailForm= ()=>{
         
          setSuccessMessage(response.data.message);
          setErrorMessage(response.data.error);
-         
+         setIsOpen(true);
          // Assuming the token is returned in the response
          const token = response.data.token;
     
@@ -35,7 +56,8 @@ const EmailForm= ()=>{
             }
          },5000)
         }catch(error){
-            console.log(error)
+            setErrorMessage(response.data.error);
+            setIsOpen(true);
         }
     }
     
@@ -52,9 +74,18 @@ const EmailForm= ()=>{
                     onChange={handleEmailChange}
                 />
                 <button className="ml-96 mt-4 w-30  p-3 rounded border-2 bg-red-800 text-white">Submit</button>
-                {successMessage && <div className="ml-64 text-black">{successMessage}</div>}
-                {errorMessage && <div className="ml-96 text-black">{errorMessage}</div>}
             </form>
+            <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={() => setIsOpen(false)}
+            style={customStyles}
+            contentLabel="Example Modal">
+                <div>
+                <button onClick={() => setIsOpen(false)} className="bg-black text-base text-white font-medium">close</button>
+                    {successMessage && <div className="text-black text-5xl font-sans font-medium">{successMessage}</div>}
+                    {errorMessage && <div className="text-black text-5xl font-sans font-medium">{errorMessage}</div>}
+                </div>
+            </Modal>
         </div>
     )
 }

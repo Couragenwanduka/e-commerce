@@ -13,7 +13,7 @@ const helpOptions = [
     { value: 'Payment Option', label: 'Payment Option'},
     { value: 'Track Your Order', label: 'Track Your Order'},
     { value: 'Cancel Your Order', label: 'Cancel Your Order'}
-]
+];
 
 function Header() {
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -27,40 +27,42 @@ function Header() {
     };
     const user= "Hi , courage"
     return (
-        <div className="flex bg-blue-800 h-24">
-            <h1 className="flex-1 w-14 ml-4 text-3xl font-mono">MarketMate</h1>
-            <input type="text" placeholder="Search Products, Brands, and Categories" className="flex-auto w-50 h-20 mt-2 bOrder-black" />
-            <button className="flex-1 w-32 rounded shadow-gray-600  h-10 mt-8 ml-2" id='button'>Search</button>
-            <div className="flex-1 " onClick={handleOptionSelect} id='dropdown'>
-                <span>{user} ^</span>
+       <div className="flex bg-blue-800 h-24 items-center">
+            <h1 className="flex-1 ml-4 text-2xl font-mono text-white">MarketMate</h1>
+            <input type="text" placeholder="Search Products, Brands, and Categories" className="flex-auto w-1/2 h-10 mt-2 rounded-l-lg p-2 focus:outline-none" />
+            <button className="rounded-r-lg bg-white text-blue-800 h-10 mt-2 mr-2">Search</button>
+            <div className="relative mr-4">
+                <button onClick={handleOptionSelect} className="text-white">{user} ^</button>
                 {dropdownVisible && (
-                    <ul className='list-none'>
+                    <ul className='absolute top-10 right-0 bg-white rounded-lg shadow-lg p-2'>
                         {options.map(option => (
-                            <li key={option.value} style={{position:'relative'}}>
-                                <img src={option.image} alt={option.label} style={{ marginRight: '10px', width: '24px', height: '24px',position:'relative' }} />
+                            <li key={option.value}>
+                                <img src={option.image} alt={option.label} className="mr-2 w-6 h-6" />
                                 {option.label}
                             </li>
                         ))}
                     </ul>
                 )}
             </div>
-            <div className='flex-1' onClick={handleOptionSelect1} id='dropdown1' >
-            <span className='flex'>
-            <img src="help.png" alt="help" id='imagelogo'/>
-            <h1 className="flex-1" id='logotext'>HELP</h1>
-            </span>
-            {dropdown && (
-                <ul className='list-none'>
-                    {helpOptions.map(option => (
-                        <li key={option.value} style={{position:'relative'}}>
-                            {option.label}
-                        </li>
-                    ))}
-                </ul>
-            )}
+            <div className='relative mr-4'>
+                <button onClick={handleOptionSelect1} className="text-white flex items-center">
+                    <img src="help.png" alt="help" className="mr-2 w-6 h-6"/>
+                    HELP
+                </button>
+                {dropdown && (
+                    <ul className='absolute top-10 right-0 bg-white rounded-lg shadow-lg p-2'>
+                        {helpOptions.map(option => (
+                            <li key={option.value}>
+                                {option.label}
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
-            <img src="cart.png" alt="cart" id='imagelogo'/>
-            <h1 className="flex-1" id='logotext'>Cart</h1>
+            <div className="mr-4">
+                <img src="cart.png" alt="cart" className="w-6 h-6 text-white"/>
+                <h1 className="text-white">Cart</h1>
+            </div>
         </div>
     );
 }

@@ -8,6 +8,8 @@ import EMAILVERIFICATION from "./pages/EmailVerification.jsx";
 import OTPVERIFICATION from "./pages/OtpVerification.jsx";
 import SELLERPAGE from "./pages/SellerPage.jsx";
 import ADMINPAGE from "./pages/AdminP.jsx";
+import PRODUCT from "./pages/products.jsx";
+import ORDERPAGE from "./pages/showorder.jsx";
 
  function ROUTER() {
     return (
@@ -22,6 +24,8 @@ import ADMINPAGE from "./pages/AdminP.jsx";
                 <Route path="/otp-verification" element={<OTPVERIFICATION />} />
                 <Route path="/seller-Registration" element={<SELLERPAGE />} />
                 <Route path="/admin" element={<ADMINPAGE />} />
+                <Route path="/product" element={<PRODUCT />} />
+                <Route path="/order" element={<ORDERPAGE />} />
             </Route>
         </Routes>
     </BrowserRouter>

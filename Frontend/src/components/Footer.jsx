@@ -1,41 +1,51 @@
-function FOOTER(){
-    return(
-     <div className="bg-purple-950	">
-        <table>
-            <tr>
-                <th>About MarketMate</th>
-                <th>Payment</th>
-                <th>Buying from MarketMate</th>
-                <th>More Info</th>
-               
-            </tr>
-            <tr>
-                <td>Contact us</td>
-                <td>About Us</td>
-                <td>Career</td>
-                <td>Terms of Use</td>
-            </tr>
-            <tr>
-                <td>MM PAY</td>
-                <td>Wallet</td>
-                <td>Verve</td>
-                <td>MasterCard</td>
-            </tr>
-            <tr>
-                <td>FAQS</td>
-                <td>Delivery</td>
-                <td>Bulk Purchase</td>
-                <td>MM Return Policy</td>
-            </tr>
-            <tr>
-                <td>Site Map</td>
-                <td>Track My order</td>
-                <td>Private Policy</td>
-            </tr>
-        </table>
-     </div>
-
-    )
+import { Link } from "react-router-dom";
+function FOOTER() {
+    return (
+        <div className="bg-purple-950 w-full py-8 text-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-wrap justify-center -mx-4">
+                    <div className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
+                        <h2 className="text-lg font-semibold mb-4">About MarketMate</h2>
+                        <ul>
+                            <li>Contact us</li>
+                            <li>MM PAY</li>
+                            <li>FAQS</li>
+                            <li>Site Map</li>
+                        </ul>
+                    </div>
+                    <div className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
+                        <h2 className="text-lg font-semibold mb-4">Payment</h2>
+                        <ul>
+                            <li>About Us</li>
+                            <li>Wallet</li>
+                            <li>Delivery</li>
+                            <li>Track My order</li>
+                        </ul>
+                    </div>
+                    <div className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
+                        <h2 className="text-lg font-semibold mb-4">Buying from MarketMate</h2>
+                        <ul>
+                            <li>Career</li>
+                            <li>Verve</li>
+                            <li>Bulk Purchase</li>
+                            <li>Private Policy</li>
+                        </ul>
+                    </div>
+                    <div className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
+                        <h2 className="text-lg font-semibold mb-4">More Info</h2>
+                        <ul>
+                            <li>Terms of Use</li>
+                            <li>MasterCard</li>
+                            <li>MM Return Policy</li>
+                        </ul>
+                        <Link to={'/email-verification'}>
+                        <button className="mt-4 bg-white text-purple-950 py-2 px-4 rounded-full font-semibold">Become a Seller</button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default FOOTER;

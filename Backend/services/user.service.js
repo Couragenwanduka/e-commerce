@@ -40,3 +40,12 @@ export const findAllAdmins=async()=>{
         throw new Error("An error occurred while retrieving the users"+ error)
     }
 }
+export const findUserById= async (email)=>{
+    try{
+        const user = await User.findOne({email});
+        return user;
+    }catch(error){
+        console.log(error);
+        throw new Error("An error occurred while retrieving the user"+ error)
+    }
+}

@@ -1,6 +1,7 @@
 import {findUserByEmail,saveUser,findAllUsers,findAllAdmins} from '../services/user.service.js'
 import {validateSignUp,validateSignIn} from '../config/joi.js'
 import { comparePassword } from '../config/bcrypt.js';
+import {sendWelcomeMail} from '../config/nodemailer.js'
 import jwt from 'jsonwebtoken'
 
 
@@ -26,6 +27,7 @@ export const registerUser = async(req,res) =>{
      await saveUser(name,email,password,role)
     }}
     const newUser= await saveUser(name,email,password,role)
+    sendWelcomeMail(email,name)
     res.status(201).json({message:"User created successfully",newUser})
     }catch(error){
     res.status(500).json({message:error.message})
