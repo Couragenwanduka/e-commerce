@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const options = [
     { value: 'myaccount', label: 'My Account', image: 'person.png' },
@@ -25,11 +26,12 @@ function Header() {
     const handleOptionSelect1 = () => {
         setDropdown(!dropdown); // Toggle dropdown visibility
     };
-    const user= "Hi , courage"
+    const user = "Hi , courage";
+    
     return (
        <div className="flex bg-blue-800 h-24 items-center">
             <h1 className="flex-1 ml-4 text-2xl font-mono text-white">MarketMate</h1>
-            <input type="text" placeholder="Search Products, Brands, and Categories" className="flex-auto w-1/2 h-10 mt-2 rounded-l-lg p-2 focus:outline-none" />
+            <input type="text" placeholder="Search..." className="flex-auto w-1/3 h-10 mt-2 rounded-l-lg p-2 focus:outline-none" />
             <button className="rounded-r-lg bg-white text-blue-800 h-10 mt-2 mr-2">Search</button>
             <div className="relative mr-4">
                 <button onClick={handleOptionSelect} className="text-white">{user} ^</button>
@@ -60,8 +62,10 @@ function Header() {
                 )}
             </div>
             <div className="mr-4">
+                <Link to={'/order'}>
                 <img src="cart.png" alt="cart" className="w-6 h-6 text-white"/>
-                <h1 className="text-white">Cart</h1>
+                <button className="text-white">Cart</button>
+                </Link>
             </div>
         </div>
     );

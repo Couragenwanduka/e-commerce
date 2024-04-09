@@ -1,4 +1,4 @@
-import {findUserByEmail,saveUser,findAllUsers,findAllAdmins} from '../services/user.service.js'
+import {findUserByEmail,saveUser,findAllUsers,findAllAdmins,getUserById,deleteUserById} from '../services/user.service.js'
 import {validateSignUp,validateSignIn} from '../config/joi.js'
 import { comparePassword } from '../config/bcrypt.js';
 import {sendWelcomeMail} from '../config/nodemailer.js'
@@ -56,5 +56,29 @@ export const loginUser = async(req,res) =>{
     res.status(200).json({message:"User logged in successfully",user,token})
     }catch(error){
     res.status(500).json({message:error.message})
+    }
+}
+
+
+export const getAllUsers = async(req, res) =>{
+    try{
+     const users = await findAllUsers();
+     return res.status(200).json({ users });
+    }catch(error){
+        res.status(500).json({message:error.message})
+    }
+}
+
+export const deleteAUserById= async(req, res) =>{
+    try{
+    const {id}=req.params;
+    const user= await getUserById(id);
+    if(!user){
+        return res.status(400).json({message:"User does not exist"})
+    }
+    await deleteUserById(id)
+    return res.status(200).json({message:"User deleted successfully"})
+    }catch(error){
+        res.status(500).json({message:error.message})
     }
 }

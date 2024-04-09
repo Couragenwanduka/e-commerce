@@ -49,3 +49,23 @@ export const findUserById= async (email)=>{
         throw new Error("An error occurred while retrieving the user"+ error)
     }
 }
+
+export const deleteUserById= async (_id)=>{
+    try{
+        const user = await User.findByIdAndDelete({_id});
+        return user;
+    }catch(error){
+        console.log(error);
+        throw new Error("An error occurred while deleting the user"+ error)
+    }
+}
+
+export const getUserById= async(_id)=>{
+    try{
+        const user = await User.findById({_id});
+        return user;
+    }catch(error){
+        console.log(error);
+        throw new Error("An error occurred while retrieving the user"+ error)
+    }
+}

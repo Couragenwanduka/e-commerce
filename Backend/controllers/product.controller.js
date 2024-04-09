@@ -1,9 +1,10 @@
-import { saveProduct,findAllProducts } from '../services/product.service.js';
+import { saveProduct,findAllProducts,deleteProductById,findProductById } from '../services/product.service.js';
 import { validateProduct } from '../config/joi.js';
 import cloudinary from '../config/cloudinary.js';
 import { multipleUpload } from '../config/multer.js'; 
 import { findSellerByEmail } from '../services/seller.service.js';
 import { verifyCookie } from '../helper/jwt.decode.js';
+import {sendProductDeleteMail} from '../config/nodemailer.js'
 
 export const createProduct = async (req, res) => {
     try {
@@ -61,5 +62,20 @@ export const getAllProducts = async (req, res) => {
         return res.status(200).json({ products });
     } catch (error) {
         res.status(500).json({ message: "Error retrieving products", error: error.name });
+    }
+}
+
+export const deleteProduct = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const valid = await findProductById(_id);
+        if (!valid) {
+            return res.status(400).json({ message: "Invalid product id" });
+        }
+        console.log(valid)
+        // const deletedProduct = await deleteProductById(_id);
+        return res.status(200).json({ message: "Product deleted successfully", deletedProduct });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting product", error: error.name });
     }
 }

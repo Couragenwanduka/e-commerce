@@ -1,4 +1,4 @@
-import {saveSeller,findSellerByEmail} from '../services/seller.service.js';
+import {saveSeller,findSellerByEmail,getAllUsers,deleteSeller,findSellerById} from '../services/seller.service.js';
 import {generateOtp} from '../helper/otps.js';
 import {sendMail} from '../config/nodemailer.js'
 import {verifyCookie} from '../helper/jwt.decode.js'
@@ -110,3 +110,27 @@ export const loginUser = async(req,res) =>{
     }
 }
 
+
+export const getAllUsersController = async (req, res) => {
+    try {
+        const users = await getAllUsers();
+        return res.status(200).json({ users });
+    } catch (error) {
+        res.status(500).json({ message: "Error retrieving users", error: error.name });
+    }
+}
+
+export const deleteSellerController = async (req, res) => {
+    try {
+        const {_id}=req.params;
+        const seller = await findSellerById(_id);
+        if (!seller) {
+            return res.status(404).json({ message: "Seller not found" });
+        }
+        await deleteSeller(_id);
+        return res.status(200).json({ message: "Seller deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting seller", error: error.name });
+    }
+
+}

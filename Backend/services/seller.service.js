@@ -22,3 +22,33 @@ export const findSellerByEmail = async(email)=>{
         throw new Error("An error occurred while retrieving the seller"+ error)
     }
 }
+
+export const getAllUsers = async()=>{
+    try{
+        const users = await Seller.find();
+        return users;
+    }catch(error){
+        console.log(error);
+        throw new Error("An error occurred while retrieving the users"+ error)
+    }
+}
+
+export const deleteSeller = async(_id)=>{
+    try{
+        const user = await Seller.findByIdAndDelete({_id});
+        return user;
+    }catch(error){
+        console.log(error);
+        throw new Error("An error occurred while deleting the user"+ error)
+    }
+}
+
+export const findSellerById = async(_id)=>{
+    try{
+        const seller = await Seller.findById({_id});
+        return seller;
+    }catch(error){
+        console.log(error);
+        throw new Error("An error occurred while retrieving the seller"+ error)
+    }
+}

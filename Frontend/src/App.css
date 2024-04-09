@@ -176,3 +176,38 @@
 .quantity-btn:hover {
   background-color: #d85a4b;
 }
+.checkoutbutton{
+  background-color: #4CAF50; /* Green background */
+  border: none; /* Remove border */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make it an inline-block element */
+  font-size: 16px; /* Font size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Cursor style on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  margin-top: 20px;
+  margin-left: 42%;
+}
+.modal {
+  position: fixed;
+  left: 50px; /* Adjust the left position as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 9999;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

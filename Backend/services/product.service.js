@@ -29,3 +29,13 @@ export const findProductById = async(_id)=>{
         throw new Error("An error occurred while retrieving the product"+ error)
     }
 }
+
+export const deleteProductById = async(_id)=>{
+    try{
+        const product = await Product.findByIdAndDelete({_id});
+        return product;
+    }catch(error){
+        console.log(error);
+        throw new Error("An error occurred while deleting the product"+ error)
+    }
+}

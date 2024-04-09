@@ -64,3 +64,29 @@ export const sendWelcomeMail = async (email,name) => {
         throw new Error("An error occurred while sending the email: " + error);
     }
 };
+
+export const sendProductDeleteMail = async (email,productid,productname,name) => {
+    try {
+        // Read HTML template file
+        const htmlTemplate = await fs.promises.readFile(path.join(__dirname, '../helper', 'deletedProducts.html'), 'utf-8');
+        
+
+        // Replace placeholder {{OTP}} with actual OTP value
+        const formattedHtml = htmlTemplate
+        .replaceAll('[Recipient Name]', name)
+        .replaceAll('[Product ID]', productid)
+        .replaceAll('[Product Name]', productname);
+    
+
+        // Send email
+        const info = await transporter.sendMail({
+            from: process.env.smtpUsername, // Sender address
+            to: email, // Receiver address
+            subject: "MarketMate OTP", // Subject line
+            html: formattedHtml, // HTML body
+        });
+    } catch (error) {
+        console.error("Error sending email:", error);
+        throw new Error("An error occurred while sending the email: " + error);
+    }
+};
