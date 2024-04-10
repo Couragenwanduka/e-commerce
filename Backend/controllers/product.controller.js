@@ -1,4 +1,4 @@
-import { saveProduct,findAllProducts,deleteProductById,findProductById } from '../services/product.service.js';
+import { saveProduct,findAllProducts,deleteProductById,findProductById,findProductsByName } from '../services/product.service.js';
 import { validateProduct } from '../config/joi.js';
 import cloudinary from '../config/cloudinary.js';
 import { multipleUpload } from '../config/multer.js'; 
@@ -10,19 +10,18 @@ export const createProduct = async (req, res) => {
     try {
         multipleUpload(req, res, async (error) => {
             if (error) {
+               
                 return res.status(400).json({ message: "Error uploading image", error: error });
             }
             
             const { category, name, description, stock, price } = req.body;
             const { token } = req.cookies; 
+       
            if(!token) {
             return res.status(400).json({ message: "You need to login " });
            }
-            if (!req.files || req.files.length === 0) {
-                return res.status(400).json({ message: "No files uploaded" });
-            }
-
             const images = [];
+          
             for (const file of req.files) {
                 const uploadImage = await cloudinary.uploader.upload(file.path);
                 if (!uploadImage) {
@@ -41,14 +40,14 @@ export const createProduct = async (req, res) => {
                 return res.status(400).json({ message: "Invalid token" });
             }
 
-            const { email } = payload;
+            const { email } = payload.seller;
+           console.log(email);
             const user = await findSellerByEmail(email);
             if (!user) {
                 return res.status(400).json({ message: "User does not exist. Please sign up." });
             }
 
             const product = await saveProduct(category, name, description, stock, price, images, user._id);
-            console.log(product);
             return res.status(200).json({ message: "Product saved successfully", product });
         });
     } catch (error) {
@@ -72,10 +71,23 @@ export const deleteProduct = async (req, res) => {
         if (!valid) {
             return res.status(400).json({ message: "Invalid product id" });
         }
-        console.log(valid)
+        // await sendProductDeleteMail(email,valid._id,valid.name,valid.users.name)
         // const deletedProduct = await deleteProductById(_id);
-        return res.status(200).json({ message: "Product deleted successfully", deletedProduct });
+        return res.status(200).json({ message: "Product deleted successfully"});
     } catch (error) {
         res.status(500).json({ message: "Error deleting product", error: error.name });
+    }
+}
+
+export const searchProduct= async (req, res) => {
+    try {
+        const { name } = req.body;
+        const products = await findProductsByName(name);
+        if(!products){
+            return res.status(400).json({message:"No product found"})
+        }
+        return res.status(200).json({ products });
+    } catch (error) {
+        res.status(500).json({ message: "Error retrieving products", error: error.name });
     }
 }

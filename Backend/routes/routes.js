@@ -1,37 +1,58 @@
 import { Router } from "express";
-import {registerUser,loginUser,getAllUsers,deleteAUserById } from '../controllers/user.controller.js';
-import {createProduct,getAllProducts,deleteProduct } from '../controllers/product.controller.js';
-import {validateEmail,validateOtp,registerSeller,getAllUsersController,deleteSellerController} from '../controllers/seller.controller.js'
-import {addToCart,getCart } from '../controllers/cart.controller.js';
-import {verifyCookie} from '../middlewares/jwt.js'
+import {
+    registerUser,
+    loginUser,
+    getAllUsers,
+    deleteAUserById,
+    getUser
+} from '../controllers/user.controller.js';
 
-const router= Router();
+import {
+    createProduct,
+    getAllProducts,
+    deleteProduct,
+    searchProduct
+} from '../controllers/product.controller.js';
 
-router.get('/getAllProducts',getAllProducts)
+import {
+    validateEmail,
+    validateOtp,
+    registerSeller,
+    getAllUsersController,
+    deleteSellerController
+} from '../controllers/seller.controller.js';
 
-router.post('/register',registerUser);
+import {
+    addToCart,
+    getCart
+} from '../controllers/cart.controller.js';
 
-router.post('/login',loginUser);
- 
-router.post('/uploadProducts',createProduct)
+import { verifyCookie } from '../middlewares/jwt.js';
 
-router.post('/validateEmail',validateEmail)
+const router = Router();
 
-router.post('/validateOtp',validateOtp)
+// User routes
+router.get('/getAllProducts', getAllProducts);
+router.post('/register', registerUser);
+router.post('/login', loginUser);
+router.get('/getallusers', verifyCookie, getAllUsers);
+router.delete('/deleteUser/:_id', verifyCookie, deleteAUserById);
+router.get('/getUserInfo', getUser);
 
-router.post('/registerSeller',registerSeller)
+// Product routes
+router.post('/uploadProducts', createProduct);
+router.delete('/deleteProduct/:_id', verifyCookie, deleteProduct);
+router.post('/searchProducts', searchProduct);
 
-router.post('/addtocart',addToCart)
+// Seller routes
+router.post('/validateEmail', validateEmail);
+router.post('/validateOtp', validateOtp);
+router.post('/registerSeller', registerSeller);
+router.get('/getallsellers', verifyCookie, getAllUsersController);
+router.delete('/deleteseller/:_id', verifyCookie, deleteSellerController);
 
-router.get('/showorder',getCart)
+// Cart routes
+router.post('/addtocart', addToCart);
+router.get('/showorder', getCart);
 
-router.get('/getallusers',verifyCookie,getAllUsers )
-
-router.get('/getallsellers',verifyCookie,getAllUsersController)
-
-router.delete('/deleteseller/:_id',verifyCookie,deleteSellerController)
-
-router.delete('/deleteUser/:_id',verifyCookie,deleteAUserById)
-
-router.delete('/deleteProduct/:_id',deleteProduct)
 export default router;

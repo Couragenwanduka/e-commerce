@@ -21,8 +21,8 @@ const customStyles = {
     }
 };
 
-const SHOWALLPRODUCTS = () => {
-    const [products, setProducts] = useState([]);
+const SHOWALLPRODUCTS = ({ products: initialProducts }) => {
+    const [fetchedProducts, setFetchedProducts] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -49,7 +49,7 @@ const SHOWALLPRODUCTS = () => {
                         imageUrl: shuffleArray(product.imageUrl)
                     }));
 
-                    setProducts(shuffledProducts);
+                    setFetchedProducts(shuffledProducts);
                     setErrorMessage('');
                     setSuccessMessage(response.data.message);
                 }
@@ -125,19 +125,34 @@ const SHOWALLPRODUCTS = () => {
     };
     return (
         <>
-            <div className='product-container'>
-                {products.map(product => (
-                    <div key={product._id} className='product-card' onClick={() => openModal(product)}>
-                        <img src={shuffleArray(product.imageUrl)[0]} alt={product.name} className='product-image' />
-                        <div className='product-details'>
-                            <p className='product-name'>{product.name}</p>
-                            <p className='product-price'>${product.price}</p>
+            {/* Conditionally render products based on whether props are available */}
+            {initialProducts && initialProducts.length > 0 ? (
+                <div className='product-container'>
+                    {initialProducts.map(product => (
+                        <div key={product._id} className='product-card' onClick={() => openModal(product)}>
+                            <img src={shuffleArray(product.imageUrl)[0]} alt={product.name} className='product-image' />
+                            <div className='product-details'>
+                                <p className='product-name'>{product.name}</p>
+                                <p className='product-price'>${product.price}</p>
+                            </div>
+                            <button className="add-to-cart-button">Add to Cart</button>
                         </div>
-                        <button className="add-to-cart-button">Add to Cart</button>
-                    </div>
-                ))}
-            </div>
-
+                    ))}
+                </div>
+            ) : (
+                <div className='product-container'>
+                    {fetchedProducts.map(product => (
+                        <div key={product._id} className='product-card' onClick={() => openModal(product)}>
+                            <img src={shuffleArray(product.imageUrl)[0]} alt={product.name} className='product-image' />
+                            <div className='product-details'>
+                                <p className='product-name'>{product.name}</p>
+                                <p className='product-price'>${product.price}</p>
+                            </div>
+                            <button className="add-to-cart-button">Add to Cart</button>
+                        </div>
+                    ))}
+                </div>
+            )}
             <Modal
                 isOpen={productModel}
                 onRequestClose={() => setProductModel(false)}

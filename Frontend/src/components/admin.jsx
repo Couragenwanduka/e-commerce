@@ -14,6 +14,7 @@ const AdminPage = () => {
     const [deleteModal, setDeleteModalOpen] = useState(false);
     const [deleteUserModal, setDeleteUserModalOpen] = useState(false)
     const [sellerModal, setSellerModalOpen] = useState(false);
+    const [deleteProductModal, setDeleteProductModalOpen] = useState(false);
     const [loading, setLoading] = useState(true); // Add loading state
     const [cookies] = useCookies(['token']);
 
@@ -23,7 +24,8 @@ const AdminPage = () => {
             const response = await axios.get('http://localhost:5740/getallusers', {
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                withCredentials: true, // Include cookies in the request
             }); 
             setUsers(response.data); 
             setLoading(false); 
@@ -39,7 +41,8 @@ const AdminPage = () => {
             const response= await axios.get('http://localhost:5740/getallsellers', {
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                withCredentials: true, // Include cookies in the request
             });
             setSeller(response.data);
             setLoading(false);
@@ -55,7 +58,8 @@ const AdminPage = () => {
             const response = await axios.delete(`http://localhost:5740/deleteseller/${_id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                withCredentials: true, // Include cookies in the request
             });
             console.log(response.data);
             setSeller(response.data);
@@ -72,7 +76,8 @@ const AdminPage = () => {
             const response = await axios.delete(`http://localhost:5740/deleteUser/${_id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                withCredentials: true, // Include cookies in the request
             });
             console.log(response.data);
             setUsers(response.data);
@@ -83,11 +88,30 @@ const AdminPage = () => {
         }
     }
 
+    const deleteProducts= async()=>{
+        try{
+            const token = cookies.token;
+            const response= await axios.delete(`http://localhost:5740/deleteProduct/${_id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                withCredentials: true, // Include cookies in the request
+            });
+            console.log(response.data);
+            setSeller(response.data);
+            setSellerModalOpen(false);
+        }catch(error){
+            console.error('Error fetching data:', error);
+            setErrorMessage(error.response.data.message);
+        }
+    }
+
     useEffect(() => {
         fetchData(); // Fetch data when the component mounts
         fetchSellers(); // Fetch sellers when the component mounts
         deleteSeller(); // Delete the seller when the component mounts
         deleteUser(); // Delete the user when the component mounts
+        deleteProducts();
     }, [cookies.token]); 
 
     const handleOpen = () => {
@@ -122,7 +146,9 @@ const AdminPage = () => {
         <button className="w-full bg-green-600 hover:bg-green-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">Approve Product</button>
     </li>
     <li className="mb-4">
-        <button className="w-full bg-red-600 hover:bg-red-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">Delete Products</button>
+        <button className="w-full bg-red-600 hover:bg-red-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+        onClick={()=>setDeleteProductModalOpen(true)}
+        >Delete Products</button>
     </li>
     <li className="mb-4">
         <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
@@ -233,6 +259,22 @@ const AdminPage = () => {
                     <label>Input Seller Id</label>
                     <input type="text" onChange={(e) => setId(e.target.value)} placeholder='ID' className='w-100 p-5'/>
                     <button onClick={() => deleteUser()} className='mt-10 w-100 bg-red-600 hover:bg-red-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105'>Delete</button>
+                   </div>
+                </div>
+            </Modal>
+            <Modal 
+            isOpen={deleteProductModal}
+            onRequestClose={() => setDeleteProductModalOpen(false)}
+            className="modal"
+            overlayClassName="overlay"
+            ariaHideApp={false}
+            >
+                <div className="modal-container">
+                    <button onClick={() => setDeleteProductModalOpen(false)} className="close-button">Close</button>
+                   <div className='flex flex-col'>
+                    <label>Input Seller Id</label>
+                    <input type="text" onChange={(e) => setId(e.target.value)} placeholder='ID' className='w-100 p-5'/>
+                    <button onClick={() => deleteProducts()} className='mt-10 w-100 bg-red-600 hover:bg-red-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105'>Delete</button>
                    </div>
                 </div>
             </Modal>

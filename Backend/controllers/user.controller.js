@@ -1,8 +1,11 @@
-import {findUserByEmail,saveUser,findAllUsers,findAllAdmins,getUserById,deleteUserById} from '../services/user.service.js'
-import {validateSignUp,validateSignIn} from '../config/joi.js'
+import {findUserByEmail,saveUser,findAllUsers,findAllAdmins,getUserById,deleteUserById} from '../services/user.service.js';
+import {findSellerByEmail} from '../services/seller.service.js';
+import {validateSignUp,validateSignIn} from '../config/joi.js';
 import { comparePassword } from '../config/bcrypt.js';
-import {sendWelcomeMail} from '../config/nodemailer.js'
+import {sendWelcomeMail} from '../config/nodemailer.js';
 import jwt from 'jsonwebtoken'
+import {verifyCookie} from '../helper/jwt.decode.js'
+
 
 
 export const registerUser = async(req,res) =>{
@@ -34,30 +37,52 @@ export const registerUser = async(req,res) =>{
     }
 };
 
-export const loginUser = async(req,res) =>{
-    try{
-    const {email,password}=req.body;
-    const valid= validateSignIn(email,password)
-    if(!valid){
-        return res.status(400).json({message:"Invalid username or password"+valid.message.error})
+export const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const valid = validateSignIn(email, password);
+        
+        if (!valid) {
+            return res.status(400).json({ message: "Invalid username or password" });
+        }
+        
+        const user = await findUserByEmail(email);
+        const seller = await findSellerByEmail(email);
+          const role= "seller&user";
+        if(user && seller) {
+           const isUserMatch= await comparePassword(password,user)
+           const isSellerMatch= await comparePassword(password,seller)
+           if(isUserMatch || isSellerMatch){
+            const payload = { user };
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
+            res.cookie('token', token, { httpOnly: true });
+            return res.status(200).json({ message: "user logged in successfully",role ,user, token });
+           }
+        }else if (user) {
+            const isMatch = await comparePassword(password, user);
+            const role='user';
+            if (isMatch) {
+                const payload = { user };
+                const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
+                res.cookie('token', token, { httpOnly: true });
+                return res.status(200).json({ message: "User logged in successfully", role,user, token });
+            }
+        } else if (seller) {
+            const isMatch = await comparePassword(password, seller);
+            const role='seller';
+            if (isMatch) {
+                const payload = { seller };
+                const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
+                res.cookie('token', token, { httpOnly: true });
+                return res.status(200).json({ message: "Seller logged in successfully", role,seller, token });
+            }
+        }
+        
+        res.status(400).json({ message: "User does not exist. Please sign up." });
+    } catch (error) {
+        res.status(500).json({ message: "An error occurred", error: error.message });
     }
-    const user= await findUserByEmail(email)
-    if(!user){
-        return res.status(400).json({message:"User does not exist please Sign up"+valid.message.error})
-    }
-    const isMatch= await comparePassword(password,user)
-    if(!isMatch){
-        return res.status(400).json({message:"Invalid username or password"+valid.message.error})
-    }
-    const payload= {user}
-    console.log(payload)
-    const token= jwt.sign(payload,process.env.JWT_SECRET,{expiresIn: '2h'})
-    res.cookie('token',token,{httpOnly:true})
-    res.status(200).json({message:"User logged in successfully",user,token})
-    }catch(error){
-    res.status(500).json({message:error.message})
-    }
-}
+};
 
 
 export const getAllUsers = async(req, res) =>{
@@ -78,6 +103,27 @@ export const deleteAUserById= async(req, res) =>{
     }
     await deleteUserById(id)
     return res.status(200).json({message:"User deleted successfully"})
+    }catch(error){
+        res.status(500).json({message:error.message})
+    }
+}
+
+export const getUser= async(req, res) =>{
+    try{
+    const {token}= req.cookies;
+    if(!token){
+     return res.status(401).json({message:"please login"})
+    }
+   const decode = verifyCookie(token);
+   if(!decode){
+    return res.status(401).json({message:"Could not verify token"})
+   }
+   const {_id}=decode.user
+    const user= await getUserById(_id);
+    if(!user){
+        return res.status(400).json({message:"User does not exist"})
+    }
+    return res.status(200).json({user})
     }catch(error){
         res.status(500).json({message:error.message})
     }

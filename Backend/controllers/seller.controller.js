@@ -58,8 +58,10 @@ export const registerSeller = async (req, res) => {
         }
 
         let payload;
+
         try {
-            payload = jwt.verify(token, 'your-secret-key');
+            payload = verifyCookie(token);
+            console.log(payload)
         } catch (error) {
             if (error.name === 'TokenExpiredError') {
                 return res.status(403).json({ message: "Token expired" });

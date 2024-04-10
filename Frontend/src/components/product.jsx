@@ -24,8 +24,8 @@ const customStyles = {
 };
 const PRODUCTPAGE = () => {
     const [name, setName] = useState('');
-    const [Category , setCategory] = useState('');
-    const [Description, setDescription] = useState('');
+    const [category , setCategory] = useState('');
+    const [description, setDescription] = useState('');
     const [stock , setStock] = useState('');
     const [price , setPrice] = useState('');
     const [image, setImage] = useState('');
@@ -54,42 +54,40 @@ const PRODUCTPAGE = () => {
         setPrice(e.target.value);
     }
     const handleImageChange = (e) => {
-        setImage(e.target.value);
+        setImage(e.target.files[0]);
     }
     const handleImage2Change = (e) => {
-        setImage2(e.target.value);
+        setImage2(e.target.files[0]);
     }
     const handleImage3Change = (e) => {
-        setImage3(e.target.value);
+        setImage3(e.target.files[0]);
     }
     const handleImage4Change = (e) => {
-        setImage4(e.target.value);
+        setImage4(e.target.files[0]);
     }
     const handleImage5Change = (e) => {
-        setImage5(e.target.value);
+        setImage5(e.target.files[0]);
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data={
-           
-            Category,
-            name,
-            Description,
-            stock,
-            price,
-            image,
-            image2,
-            image3,
-            image4,
-            image5
-        }
+        const formData = new FormData();
+    formData.append('category', category);
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('stock', stock);
+    formData.append('price', price);
+    formData.append('images', image);
+    formData.append('images', image2);
+    formData.append('images', image3);
+    formData.append('images', image4);
+    formData.append('images', image5);
        try{
         const token = cookies.token;
-        const response= await axios.post('http://localhost:5740/uploadProducts',data,{
+        const response= await axios.post('http://localhost:5740/uploadProducts',formData,{
             headers: {
                 Authorization: `Bearer ${token}`
-            }
+            },withCredentials: true
         })
         setSuccessMessage(response.data.message);
         setErrorMessage(response.data.error);
@@ -103,7 +101,7 @@ const PRODUCTPAGE = () => {
     return (
         <>
         <form className="flex flex-col w-full ml-10 space-y-4" onSubmit={handleSubmit}>
-            <label className="text-lg font-semibold text-gray-800">Category</label>
+            <label className="text-lg font-semibold text-gray-800">category</label>
             <input type="text" placeholder="Enter the Category" className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
             onChange={handleCategoryChange}
             />
@@ -151,7 +149,10 @@ const PRODUCTPAGE = () => {
             isOpen={modalIsOpen}
             onRequestClose={() => setIsOpen(false)}
             style={customStyles}
-            contentLabel="Example Modal">
+            contentLabel="Example Modal"
+            ariaHideApp={false}
+            >
+            
                 <div>
                 <button onClick={() => setIsOpen(false)} className="bg-black text-base text-white font-medium">close</button>
                     {successMessage && <div className="text-black text-5xl font-sans font-medium">{successMessage}</div>}

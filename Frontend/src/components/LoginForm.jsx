@@ -30,7 +30,10 @@ function LOGINFORM(){
     const [errorMessage, setErrorMessage] = useState('');
     const [modalIsOpen,setIsOpen] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
-
+    const [choices, setChoices]= useState(false);
+    const [asUser, setAsUser] = useState(false);
+    const [asSeller, setAsSeller] = useState(false);
+   
 
     const handleEmailChange=(e)=>{
         setEmail(e.target.value);
@@ -46,21 +49,28 @@ function LOGINFORM(){
             email,
             password
          })
+        
          setSuccessMessage(response.data.message);
-         setErrorMessage(response.data.error);
+         setErrorMessage(response.data.message);
          setIsOpen(true);
          const token = response.data.token;
     
          // Set the 'token' cookie with the value of the token variable
          setCookie('token', token, { path: '/' });
         
-         setTimeout(()=>{
-            if(response.data.user.role== 'admin'){
+         
+            if(response.data.role == 'seller&user'){
+                 setChoices(true)
+            }if(asUser){
+                window.location.href='/Loggedin'
+            }else if(asSeller){
+                window.location.href='/product'
+            }else if(response.data.user.role== 'admin'){
                 window.location.href='/sign-up'
             }else{
                 window.location.href='/Loggedin'
             }
-         })
+        
         }catch(error){
          setErrorMessage(error.response.data.message)
          setIsOpen(true);
@@ -89,12 +99,46 @@ function LOGINFORM(){
                 {errorMessage&&<div className="ml-96 text-green-600">{errorMessage}</div>}
             </form>
             <Modal
+    isOpen={choices}
+    onRequestClose={() => setChoices(false)}
+    style={customStyles}
+    contentLabel="Choice Modal"
+    ariaHideApp={false}
+>
+    <div className="text-center">
+        <h1 className="text-xl font-bold mb-4">Login as a User or Seller</h1>
+        <button
+            onClick={() => {
+                setAsUser(true);
+                setChoices(false);
+                handleSubmit();
+            }}
+            className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mr-4"
+        >
+            User
+        </button>
+        <button
+            onClick={() => {
+                setAsSeller(true);
+                setChoices(false);
+                handleSubmit();
+            }}
+            className="bg-green-500 hover:bg-green-700 text-black font-bold py-2 px-4 rounded"
+        >
+            Seller
+        </button>
+    </div>
+</Modal>
+
+            <Modal
             isOpen={modalIsOpen}
             onRequestClose={() => setIsOpen(false)}
             style={customStyles}
-            contentLabel="Example Modal">
+            contentLabel="Example Modal"
+            ariaHideApp={false}
+            >
                 <div>
-                <button onClick={() => setIsOpen(false)} className="bg-black text-base text-white font-medium">close</button>
+                <button onClick={() => setIsOpen(false)} className="bg-black text-base text-black font-medium">close</button>
                     {successMessage && <div className="text-black text-5xl font-sans font-medium">{successMessage}</div>}
                     {errorMessage && <div className="text-black text-5xl font-sans font-medium">{errorMessage}</div>}
                 </div>

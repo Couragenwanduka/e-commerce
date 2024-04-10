@@ -73,7 +73,9 @@ const EmailForm= ()=>{
                     className="ml-64 mt-56 w-6/12 border-gray-500 p-3 rounded border-2"
                     onChange={handleEmailChange}
                 />
-                <button className="ml-96 mt-4 w-30  p-3 rounded border-2 bg-red-800 text-white">Submit</button>
+                <button className="ml-64 mt-4 px-6 py-3 rounded border-2 bg-red-800 text-black font-semibold shadow-md hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105">Submit</button>
+
+
             </form>
             <Modal
             isOpen={modalIsOpen}

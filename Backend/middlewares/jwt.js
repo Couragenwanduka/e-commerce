@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-export const verifyCookie= async(req,res)=>{
+export const verifyCookie= async(req,res,next)=>{
   const token = req.cookies.token
   if(!token){
    return res.status(401).json({message:"Please login"})

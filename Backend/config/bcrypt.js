@@ -18,3 +18,4 @@ export const comparePassword = async(password,user)=>{
         throw new Error("error comparing password"+error.message);
     }
 }
+

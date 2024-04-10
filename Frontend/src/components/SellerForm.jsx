@@ -44,9 +44,11 @@ const handleSubmit=async(e)=>{
     })
     setSuccessMessage(response.data.message)
     setErrorMessage(error.response.data.message)
-    console.log(response.status)
+    
         setTimeout(()=>{
-            setSuccessMessage(response.data.message)
+           if(response.status==200){
+            window.location.href='/sign-in'
+           }
         },2000)
     }catch(error){
         setErrorMessage(error.response.data.message)
@@ -73,9 +75,7 @@ const handleSubmit=async(e)=>{
                 onChange={handleCompanyAddressChange}
                 />
                 <div className="flex justify-between">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Register
-                    </button>
+                    <button className="ml-64 mt-4 px-6 py-3 rounded border-2 bg-red-800 text-black font-semibold shadow-md hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105">Submit</button>
                    
                 </div>
                 {successMessage && <div className="ml-64 text-black">{successMessage}</div>}

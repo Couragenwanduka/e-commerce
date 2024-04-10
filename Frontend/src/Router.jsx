@@ -10,6 +10,7 @@ import SELLERPAGE from "./pages/SellerPage.jsx";
 import ADMINPAGE from "./pages/AdminP.jsx";
 import PRODUCT from "./pages/products.jsx";
 import ORDERPAGE from "./pages/showorder.jsx";
+import UserDisplay from './pages/UserAccountPage.jsx';
 
  function ROUTER() {
     return (
@@ -26,6 +27,7 @@ import ORDERPAGE from "./pages/showorder.jsx";
                 <Route path="/admin" element={<ADMINPAGE />} />
                 <Route path="/product" element={<PRODUCT />} />
                 <Route path="/order" element={<ORDERPAGE />} />
+                <Route path="/UserDisplay" element={<UserDisplay />} />
             </Route>
         </Routes>
     </BrowserRouter>

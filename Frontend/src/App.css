@@ -211,3 +211,95 @@
   right: 0;
   bottom: 0;
 }
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 200px; /* Adjust the width as needed */
+  padding: 12px 0; /* Adjust the padding as needed */
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-item img {
+  margin-right: 8px;
+}
+
+/* Additional styling for the button */
+button.text-white {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+/* userDisplay.css */
+.display {
+  float: left; /* Move the div to the left */
+  margin-left: 40%; /* Add right margin */
+  margin-top: -32%; /* Add top margin */
+  padding: 20px; /* Add padding */
+  background-color: #ffffff; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(145, 92, 92, 0.1); /* Shadow */
+  color: #333333; /* Text color */
+  width: 450px; /* Width */
+  height: 400px; /* Height */
+  
+}
+
+.display h2,p {
+  margin-bottom: 10px; /* Add margin below h2 */
+  border-bottom: 1px solid #333333;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-family: monospace;
+}
+
+.display p {
+  margin-bottom: 20px; /* Add margin below p */
+}
+
+.display ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+  border-bottom: 1px solid #3c3434; /* Add bottom border */
+}
+
+.display input {
+  cursor: pointer; /* Change cursor to pointer on hover */
+  height: 50px;
+  margin-right: 10px;
+  border: 1px solid #333333;
+}
+
+.display li:hover {
+  background-color: #a98989; /* Lighter background on hover */
+}
+.submitbtn{
+  background-color: #4CAF50; /* Green background */
+  border: none; /* Remove border */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make it an inline-block element */
+  font-size: 16px; /* Font size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Cursor style on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  margin-top: 20px;
+  margin-left: 42%;
+}

@@ -32,7 +32,7 @@ const OTP = () => {
                 if (response.status === 200) {
                     window.location.href = '/seller-Registration';
                 }
-            }, 5000);
+            }, 2000);
         } catch (error) {
             console.log(error);
         }
@@ -48,7 +48,8 @@ const OTP = () => {
                     className="ml-64 mt-56 w-6/12 border-gray-500 p-3 rounded border-2"
                     onChange={handleOtpChange}
                 />
-                <button className="ml-96 mt-4 w-30  p-3 rounded border-2 bg-red-800 text-white">Submit</button>
+               <button className="ml-64 mt-4 px-6 py-3 rounded border-2 bg-red-800 text-black font-semibold shadow-md hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105"
+               >Submit</button>
                 {successMessage && <div className="ml-64 text-black">{successMessage}</div>}
                 {errorMessage && <div className="ml-96 text-black">{errorMessage}</div>}
             </form>
