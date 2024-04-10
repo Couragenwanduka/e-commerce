@@ -79,8 +79,8 @@ const UserDisplayPage = () => {
                     <div key={index}>
                         <h2 className="user-name">Name:{userData.user.name}</h2>
                         <p className="user-email">Email:{userData.user.email}</p>
-                        <input type="text" placeholder="Enter Password"/>
-                        <input type="text" placeholder="Confirm Password"/>
+                        <input type="text" placeholder="Enter Password" className="input-box"/>
+                        <input type="text" placeholder="Confirm Password" className="input-box"/>
                         <button className="submitbtn">Submit</button>
                     </div>
                 ))}

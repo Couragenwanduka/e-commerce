@@ -260,7 +260,7 @@ button.text-white {
   
 }
 
-.display h2,p {
+.display ,.user-name.user-email {
   margin-bottom: 10px; /* Add margin below h2 */
   border-bottom: 1px solid #333333;
   text-transform: uppercase;
@@ -268,17 +268,7 @@ button.text-white {
   font-family: monospace;
 }
 
-.display p {
-  margin-bottom: 20px; /* Add margin below p */
-}
-
-.display ul {
-  list-style-type: none; /* Remove bullet points */
-  padding: 0; /* Remove default padding */
-  border-bottom: 1px solid #3c3434; /* Add bottom border */
-}
-
-.display input {
+.display ,.input-box {
   cursor: pointer; /* Change cursor to pointer on hover */
   height: 50px;
   margin-right: 10px;
