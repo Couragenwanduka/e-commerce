@@ -1,4 +1,4 @@
-import { saveCart ,getCartProducts} from "../services/cart.service.js";
+import { saveCart ,getCartProducts,deleteCart,findCartById } from "../services/cart.service.js";
 import {verifyCookie} from '../helper/jwt.decode.js';
 import {findProductById} from '../services/product.service.js'
 import { findUserById} from '../services/user.service.js';  
@@ -6,7 +6,7 @@ import { findUserById} from '../services/user.service.js';
 export const addToCart = async (req, res) => {
     try {
        const token = req.cookies.token;
-       const { productId,quantity,price,imageUrl} = req.body;
+       const { productId,quantity,price,imageUrl,name} = req.body;
        const decoded = verifyCookie(token);
        if(!decoded){
         return res.status(401).json({message:"Please login"})
@@ -23,7 +23,7 @@ export const addToCart = async (req, res) => {
         }
         const user=User._id
         const product= Product._id;
-       const savedProduct = await saveCart(product,user,quantity,price,imageUrl)
+       const savedProduct = await saveCart(product,user,quantity,price,imageUrl,name)
        return res.status(200).json({message:"Product saved}",savedProduct:savedProduct})
 
     } catch (error) {
@@ -47,4 +47,19 @@ export const getCart = async(req, res) =>{
       }catch(error){
         res.status(500).json({message:"Error retrieving cart",error:error})
       }
+}
+
+export const deleteCartItem = async(req, res) =>{
+  try{
+      const {_id}= req.params
+      console.log(_id)
+      const vaild= await findCartById(_id)
+      if(!vaild){
+        return res.status(400).json({message:"Cart not found"})
+      }
+      const deletedCart= await deleteCart(_id)
+      return res.status(200).json({message:"product deleted successfully",deletedCart:deletedCart})
+  }catch(error){
+    res.status(500).json({message:"Error deleting cart",error:error})
+  }
 }

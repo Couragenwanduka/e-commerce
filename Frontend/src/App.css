@@ -251,7 +251,7 @@ button.text-white {
   margin-left: 40%; /* Add right margin */
   margin-top: -32%; /* Add top margin */
   padding: 20px; /* Add padding */
-  background-color: #ffffff; /* White background */
+  background-color: #a97f7f; /* White background */
   border-radius: 8px; /* Rounded corners */
   box-shadow: 0 2px 4px rgba(145, 92, 92, 0.1); /* Shadow */
   color: #333333; /* Text color */
@@ -259,14 +259,27 @@ button.text-white {
   height: 400px; /* Height */
   
 }
+#display{
+  float: left; /* Move the div to the left */
+  margin-left: 40%; /* Add right margin */
+  margin-top: -32%; /* Add top margin */
+  padding: 20px; /* Add padding */
+  background-color: #b1aeae18; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(145, 92, 92, 0.1); /* Shadow */
+  color: #333333; /* Text color */
+  width: 450px; /* Width */
+  height: 400px; /* Height */
+}
 
-.display ,.user-name.user-email {
+.display ,.user-name,.user-email {
   margin-bottom: 10px; /* Add margin below h2 */
   border-bottom: 1px solid #333333;
   text-transform: uppercase;
   font-size: 20px;
   font-family: monospace;
 }
+
 
 .display ,.input-box {
   cursor: pointer; /* Change cursor to pointer on hover */
@@ -292,4 +305,87 @@ button.text-white {
   transition: background-color 0.3s ease; /* Smooth background color transition */
   margin-top: 20px;
   margin-left: 42%;
+}
+.table {
+  display: table;
+  width: 150%;
+  border-collapse: collapse;
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-cell {
+  display: table-cell;
+  padding: 12px;
+  border: 1px solid black;
+  text-align: left;
+  word-break: break-all; /* Add word-break to break long names */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  inline-size: 50px;
+}
+
+/* Apply background color to alternate rows for better readability */
+.table-row:nth-child(even) {
+  /* background-color: #f7f7f7; */
+}
+.order-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  margin-left: 40%;
+  margin-top: -32%;
+}
+
+.order-id {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.product {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+}
+
+.product-name {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.product-info {
+  margin: 5px 0;
+}
+
+.product-info strong {
+  font-weight: bold;
+}
+
+.product-description {
+  color: #777;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+.submit-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
 }

@@ -49,3 +49,13 @@ export const findProductsByName= async(_name)=>{
         throw new Error("An error occurred while retrieving the products"+ error)
     }
 }
+
+export const findAndUpdateProduct=async(_id,stock)=>{
+       try{
+           const result= await Product.findByIdAndUpdate(_id,{stock: stock},{new: true})
+           return result;
+       }catch(error){
+        console.log(error);
+        throw new Error("An error occurred while updating the product"+ error)
+       }
+}

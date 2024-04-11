@@ -1,7 +1,7 @@
 import OrderPage from '../components/order.jsx'
 import LOGO from '../components/Logo.jsx'
 
-const ORDERPAGE =()=>{
+const CARTPAGE =()=>{
     return(
         <div>
             <LOGO />
@@ -10,4 +10,4 @@ const ORDERPAGE =()=>{
     )
 }
 
-export default ORDERPAGE  
+export default CARTPAGE  

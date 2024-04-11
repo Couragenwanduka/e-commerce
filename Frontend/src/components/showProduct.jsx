@@ -29,7 +29,8 @@ const SHOWALLPRODUCTS = ({ products: initialProducts }) => {
     const [cookies] = useCookies(['token']);
     const [modalProduct, setModalProduct] = useState(null);
     const [productModel, setProductModel] = useState(false);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    const [addToCartMessage, setAddToCartMessage] = useState('');
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -87,9 +88,10 @@ const SHOWALLPRODUCTS = ({ products: initialProducts }) => {
             // console.log(modalProduct._id, quantity,modalProduct.price)
             const response = await axios.post('http://localhost:5740/addToCart', {
                 productId: modalProduct._id,
-                quantity: quantities[modalProduct._id] || 0,
+                quantity: quantities[modalProduct._id] || 1,
                 price: modalProduct.price,
-                imageUrl: modalProduct.imageUrl
+                imageUrl: modalProduct.imageUrl,
+                name: modalProduct.name
             }, 
             
             {
@@ -98,12 +100,14 @@ const SHOWALLPRODUCTS = ({ products: initialProducts }) => {
                 },
                 withCredentials: true
             });
-            setErrorMessage('');
-            setSuccessMessage(response.data.message);
-            
+           setAddToCartMessage(response.data.message)
+           setTimeout(()=>{
+            if(response.status==200){
+             window.location.reload();
+            }
+           },3000)
         } catch (error) {
-            setErrorMessage('Error adding product to cart');
-            setIsOpen(false);
+            setAddToCartMessage('Error adding product to cart');
         }
     };
     const [quantities, setQuantities] = useState({});
@@ -155,7 +159,9 @@ const SHOWALLPRODUCTS = ({ products: initialProducts }) => {
             )}
             <Modal
                 isOpen={productModel}
-                onRequestClose={() => setProductModel(false)}
+                onRequestClose={() => {setProductModel(false);
+                setAddToCartMessage('');
+            }}
                 contentLabel="Product Details Modal"
                 ariaHideApp={false}
                 className="modal-content"
@@ -179,6 +185,7 @@ const SHOWALLPRODUCTS = ({ products: initialProducts }) => {
                             </div>
 
                             <button className="add-to-cart-button" onClick={handleSubmit}>Add to Cart</button>
+                            {addToCartMessage&&<div className=" text-black p-2 rounded-md">{addToCartMessage}</div>}
                         </div>
                     )}
                 </div>

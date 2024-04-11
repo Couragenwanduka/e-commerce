@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Acknowledgment</title>
+    <style>
+        /* Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+        
+        /* Container styles */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Heading styles */
+        h1 {
+            color: #1e3a8a;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        /* Paragraph styles */
+        p {
+            margin-bottom: 20px;
+        }
+        
+        /* Closing message styles */
+        .closing-message {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Acknowledgment</h1>
+        <p>Dear {{customerName}},</p>
+        <p>Thank you for placing your order with MarketMate. We've received your order and we're working on processing it as quickly as possible.</p>
+        <p>Your satisfaction is our top priority, and we want to ensure that your experience with MarketMate is nothing short of exceptional.</p>
+        <p>If you have any questions or concerns regarding your order, feel free to reach out to our customer support team. We're here to help!</p>
+        <p class="closing-message">Best regards,<br>MarketMate Team</p>
+    </div>
+</body>
+</html>

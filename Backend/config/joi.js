@@ -31,6 +31,25 @@ const sellerLogin= joi.object({
     password: joi.string().min(8).required(),
 })
 
+const orderSchema= joi.object({
+    name:joi.string().required(),
+    email: joi.string().email().required(),
+    phone:joi.string().required(),
+    address:joi.string().required(),
+    city:joi.string().required(),
+    country:joi.string().required(),
+    paymentmethod:joi.string().required()
+});
+
+export const validateOrder=(name,email,phone,address,city,country,paymentmethod)=>{
+    try{
+        const result= orderSchema.validate(name,email,phone,address,city,country,paymentmethod);
+        return result;
+    }catch(error){
+        return error;
+    }
+}
+
 export const validateSellerLogin=(email,password)=>{
     try{
         const result= sellerLogin.validate(email,password);

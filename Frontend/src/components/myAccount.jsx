@@ -2,9 +2,11 @@ import axios from "axios";
 import { useCookies } from 'react-cookie';
 import { useState } from "react";
 
+
 const UserDisplayPage = () => {
     const [cookies] = useCookies(['token']); // Retrieve the token from cookies
     const [user, setUser]= useState([]);
+    const [Order, setOrder]= useState([]); 
     const containerStyle = {
         display: 'flex',
         flexDirection: 'column',
@@ -30,6 +32,7 @@ const UserDisplayPage = () => {
 
     const handleHover = (event) => {
         event.target.style.backgroundColor = '#f0f0f0'; // Lighter background on hover
+        event.target.style.cursor='pointer';
     };
 
     const handleLeave = (event) => {
@@ -44,25 +47,48 @@ const UserDisplayPage = () => {
         },
         withCredentials: true, // Include cookies in the request
        })
-       const userData = response.data; // Assuming response.data is user data
+       const userData = response.data; 
     setUser(Array.isArray(userData) ? userData : [userData]);
-    console.log(userData.user._id);
+    
     };
+
+    const showOrder= async(event)=>{
+        try{
+            const token= cookies.token;
+           const response = await axios.get('http://localhost:5740/showorderdetails',{
+            headers: {
+                Authorization: `Bearer ${token}` // Add the token to the request headers
+            },
+            withCredentials: true, // Include cookies in the request
+   
+        })
+        const OrderData = response.data; 
+        setOrder(Array.isArray(OrderData) ? OrderData : [OrderData]);
+        console.log(OrderData);
+        }catch(error){
+            console.log(error);
+            throw new Error("An error occurred while retrieving the seller"+ error)
+        }
+    }
+    const handlePageReload=()=>{
+        // window.location.reload();
+        showOrder();
+    }
 
     return (
         <>
             <aside style={containerStyle}>
-                <div style={sectionStyle} onMouseEnter={handleHover} onMouseLeave={handleLeave}>
+                <div style={sectionStyle} >
                     <h1>My Profile</h1>
                     <ul>
-                        <li onClick={handleClick}>Account Information</li>
+                        <li onClick={handleClick} onMouseEnter={handleHover} onMouseLeave={handleLeave}>Account Information</li>
                         <li>Delivery Address</li>
                     </ul>
                 </div>
-                <div style={sectionStyle} onMouseEnter={handleHover} onMouseLeave={handleLeave}>
+                <div style={sectionStyle}>
                     <h1>My Orders</h1>
                     <ul>
-                        <li>Order History</li>
+                        <li onMouseEnter={handleHover} onMouseLeave={handleLeave} onClick={handlePageReload}>Order History</li>
                         <li>Track My Order</li>
                     </ul>
                 </div>
@@ -74,7 +100,8 @@ const UserDisplayPage = () => {
                 </div>
             </aside>
 
-            <div className=" display">
+            <div>
+                <div id="display">
                 {user && user.map((userData, index) => (
                     <div key={index}>
                         <h2 className="user-name">Name:{userData.user.name}</h2>
@@ -84,7 +111,34 @@ const UserDisplayPage = () => {
                         <button className="submitbtn">Submit</button>
                     </div>
                 ))}
+                </div>
             </div>
+            
+            <div>
+    {Order && Order.map((orderData, index) => (
+        <div key={index} class="order-container">
+            {/* Display order ID */}
+            <h2 class="order-id">ORDER ID: {orderData._id}</h2>
+            {/* Iterate over products within the order */}
+            {orderData.product.map((product, productIndex) => (
+                <div key={productIndex} class="product">
+                    {/* Display product details */}
+                    <h3 class="product-name">Product {productIndex + 1}</h3>
+                    <p class="product-info"><strong>Name:</strong> {product.name}</p>
+                    <p class="product-info"><strong>Category:</strong> {product.category}</p>
+                    <p class="product-info product-description"><strong>Description:</strong> {product.description}</p>
+                    <p class="product-info"><img class="product-image" src={product.imageUrl} alt={product.name} /></p>
+                    <p class="product-info"><strong>Price:</strong> {product.price}</p>
+                </div>
+            ))}
+            {/* Submit button */}
+            <button class="submit-button">Submit</button>
+        </div>
+    ))}
+</div>
+    
+
+
         </>
     );
 };

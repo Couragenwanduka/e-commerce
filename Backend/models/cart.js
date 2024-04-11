@@ -26,7 +26,11 @@ const cartSchema= new mongoose.Schema({
     imageUrl:[{
         type:String,
         required:true
-    }]
+    }],
+    name:{
+        type:String,
+        required:true
+    }
 
 })
 
