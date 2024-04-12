@@ -3,7 +3,7 @@ import LOGO from '../components/Logo'
 import HEADER from '../components/Header'
 import FOOTER from '../components/Footer'
 import CATEGORIES from '../components/Category'
-import SHOWALLPRODUCTS from '../components/showProduct';
+import SHOWALLPRODUCTSExtra  from '../components/landingPageShowProduct';
 import  { useState } from 'react';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
       <LOGO/>
       <HEADER onSearchResults={handleSearchResults}/>
       < CATEGORIES/>
-      <SHOWALLPRODUCTS products={searchResults} />
+      <SHOWALLPRODUCTSExtra  products={searchResults} />
       <FOOTER />
       
     </div>

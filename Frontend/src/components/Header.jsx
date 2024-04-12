@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const options = [
-    { value: 'myaccount', label: 'My Account', image: 'person.png' },
+    { value: 'myaccount', label: 'My Account', image: 'person.png', path: '/UserDisplay' },
     { value: 'Order', label: 'Order', image: 'Order.png' },
     { value: 'mail', label: 'Mail', image: 'inbox.png' },
     { value: 'saved', label: 'Saved Items', image: 'saved.png' },
@@ -31,8 +31,6 @@ function Header({ onSearchResults }) {
         setDropdown(!dropdown); // Toggle dropdown visibility
     };
 
-    const user = "Hi, Courage";
-    
     const handleSearchInputChange = (e) => {
         setSearchInput(e.target.value);
     };
@@ -64,13 +62,22 @@ function Header({ onSearchResults }) {
                 </form>
             </div>
             <div className="relative mr-20">
-                <button onClick={handleOptionSelect} className="text-white">{user} ^</button>
+                <button onClick={handleOptionSelect} className="text-white">My Account ^</button>
                 {dropdownVisible && (
                     <ul className='dropdown-menu'>
                         {options.map(option => (
                             <li key={option.value} className="dropdown-item">
-                                <img src={option.image} alt={option.label} className="mr-2 w-6 h-6" />
-                                {option.label}
+                                {option.path ? (
+                                    <Link to={option.path}>
+                                        <img src={option.image} alt={option.label} className="mr-2 w-6 h-6" />
+                                        {option.label}
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <img src={option.image} alt={option.label} className="mr-2 w-6 h-6" />
+                                        {option.label}
+                                    </>
+                                )}
                             </li>
                         ))}
                     </ul>
@@ -92,7 +99,7 @@ function Header({ onSearchResults }) {
                 )}
             </div>
             <div className="mr-10">
-                <Link to={'/order'}>
+                <Link to={'/cart'}>
                     <img src="cart.png" alt="cart" className="w-6 h-6 text-white"/>
                     <button className="text-white">Cart</button>
                 </Link>

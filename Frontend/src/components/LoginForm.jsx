@@ -66,7 +66,7 @@ function LOGINFORM(){
             }else if(asSeller){
                 window.location.href='/product'
             }else if(response.data.user.role== 'admin'){
-                window.location.href='/sign-up'
+                window.location.href='/admin'
             }else{
                 window.location.href='/Loggedin'
             }

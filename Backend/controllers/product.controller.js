@@ -2,7 +2,7 @@ import { saveProduct,findAllProducts,deleteProductById,findProductById,findProdu
 import { validateProduct } from '../config/joi.js';
 import cloudinary from '../config/cloudinary.js';
 import { multipleUpload } from '../config/multer.js'; 
-import { findSellerByEmail } from '../services/seller.service.js';
+import { findSellerByEmail, findSellerById } from '../services/seller.service.js';
 import { verifyCookie } from '../helper/jwt.decode.js';
 import {sendProductDeleteMail} from '../config/nodemailer.js'
 
@@ -71,8 +71,16 @@ export const deleteProduct = async (req, res) => {
         if (!valid) {
             return res.status(400).json({ message: "Invalid product id" });
         }
-        // await sendProductDeleteMail(email,valid._id,valid.name,valid.users.name)
-        // const deletedProduct = await deleteProductById(_id);
+        const seller = await findSellerById(valid.seller);
+        if(!seller){
+            return res.status(400).json({message:"Seller not found"})
+        }
+        const deletedProduct = await deleteProductById(_id);
+        if(!deletedProduct){
+            return res.status(400).json({message:"Product not found"})
+        }
+        await sendProductDeleteMail(seller.email,valid._id,valid.name,seller.name)
+    
         return res.status(200).json({ message: "Product deleted successfully"});
     } catch (error) {
         res.status(500).json({ message: "Error deleting product", error: error.name });

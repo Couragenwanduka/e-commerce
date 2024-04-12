@@ -15,6 +15,7 @@ const AdminPage = () => {
     const [deleteUserModal, setDeleteUserModalOpen] = useState(false)
     const [sellerModal, setSellerModalOpen] = useState(false);
     const [deleteProductModal, setDeleteProductModalOpen] = useState(false);
+    const [showAllProductsModal, setShowAllProductsModalOpen] = useState(false);
     const [loading, setLoading] = useState(true); // Add loading state
     const [cookies] = useCookies(['token']);
 
@@ -61,7 +62,7 @@ const AdminPage = () => {
                 },
                 withCredentials: true, // Include cookies in the request
             });
-            console.log(response.data);
+           
             setSeller(response.data);
             setSellerModalOpen(false);
         } catch (error) {
@@ -79,7 +80,7 @@ const AdminPage = () => {
                 },
                 withCredentials: true, // Include cookies in the request
             });
-            console.log(response.data);
+           
             setUsers(response.data);
             setIsModalOpen(false);
         } catch (error) {
@@ -88,17 +89,28 @@ const AdminPage = () => {
         }
     }
 
-    const deleteProducts= async()=>{
+      const showAllProducts= async()=>{
+        try{
+            const response= await axios.get('http://localhost:5740/getallproducts');
+           
+            setShowAllProductsModalOpen(response.data)
+        }catch(error){
+            console.error('Error fetching data:', error);
+            setErrorMessage(error.response.data.message);
+        }
+      }
+    const deleteProducts= async(productid)=>{
         try{
             const token = cookies.token;
-            const response= await axios.delete(`http://localhost:5740/deleteProduct/${_id}`, {
+            const response= await axios.delete(`http://localhost:5740/deleteProduct/${productid}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
                 withCredentials: true, // Include cookies in the request
             });
-            console.log(response.data);
+           
             setSeller(response.data);
+            successMessage(response.data);
             setSellerModalOpen(false);
         }catch(error){
             console.error('Error fetching data:', error);
@@ -111,6 +123,7 @@ const AdminPage = () => {
         fetchSellers(); // Fetch sellers when the component mounts
         deleteSeller(); // Delete the seller when the component mounts
         deleteUser(); // Delete the user when the component mounts
+        showAllProducts(); // Show all products
         deleteProducts();
     }, [cookies.token]); 
 
@@ -142,9 +155,7 @@ const AdminPage = () => {
         onClick={handleDeleteSeller}
         >Delete Seller</button>
     </li>
-    <li className="mb-4">
-        <button className="w-full bg-green-600 hover:bg-green-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">Approve Product</button>
-    </li>
+   
     <li className="mb-4">
         <button className="w-full bg-red-600 hover:bg-red-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
         onClick={()=>setDeleteProductModalOpen(true)}
@@ -169,35 +180,33 @@ const AdminPage = () => {
             </aside>
             <div><img src='../public/admin.jpg'/></div>
             <Modal
-                isOpen={modal}
-                onRequestClose={() => setIsModalOpen(false)}
-                className="modal"
-                overlayClassName="overlay"
-                ariaHideApp={false}
-            >
-                <div>
-                <h2>User Details</h2>
-                    {loading ? (
-                        <p>Loading...</p>
-                    ) : (
-                        <>
-                           
-                           {Array.isArray(users.users) && users.users.map((user, index) => (
-                        <div key={index} className="modal-container">
-                            <button onClick={() => setIsModalOpen(false)} className="close-button">Close</button>
-                            <div className='user-details'>
-                                <h2 className='user-name'>{user.name}</h2>
-                                <p className='user-email'>{user.email}</p>
-                                <p className='user-phone'>{user._id}</p>
-                            </div>
+    isOpen={modal}
+    onRequestClose={() => setIsModalOpen(false)}
+    className="modal"
+    overlayClassName="overlay"
+    ariaHideApp={false}
+>
+    <div>
+        <h2>User Details</h2>
+        {loading ? (
+            <p>Loading...</p>
+        ) : (
+            <div className="overflow-y-auto max-h-96"> {/* Add max-h-96 for maximum height and overflow-y-auto for vertical scrolling */}
+                {Array.isArray(users.users) && users.users.map((user, index) => (
+                    <div key={index} className="modal-container">
+                        <button onClick={() => setIsModalOpen(false)} className="close-button">Close</button>
+                        <div className='user-details'>
+                            <h2 className='user-name'>{user.name}</h2>
+                            <p className='user-email'>{user.email}</p>
+                            <p className='user-phone'>{user._id}</p>
                         </div>
-                    ))}
+                    </div>
+                ))}
+            </div>
+        )}
+    </div>
+</Modal>
 
-
-                        </>
-                    )}
-                </div>
-            </Modal>
             <Modal 
             isOpen={sellerModal}
             onRequestClose={() => setSellerModalOpen(false)}
@@ -213,7 +222,7 @@ const AdminPage = () => {
                         <>
                            
                            {Array.isArray(seller.users) && seller.users.map((user, index) => (
-                        <div key={index} className="modal-container">
+                        <div key={index} className="modal-container overflow-hidden">
                             <button onClick={() => setSellerModalOpen(false)} className="close-button">Close</button>
                             <div className='user-details'>
                                 <h2 className='user-name'>{user.name}</h2>
@@ -242,7 +251,7 @@ const AdminPage = () => {
                    <div className='flex flex-col'>
                     <label>Input Seller Id</label>
                     <input type="text" onChange={(e) => setId(e.target.value)} placeholder='ID' className='w-100 p-5'/>
-                    <button onClick={() => deleteSeller()} className='mt-10 w-100 bg-red-600 hover:bg-red-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105'>Delete</button>
+                    <button onClick={() => deleteSeller()} className='mt-10 w-100 bg-red-600 hover:bg-red-700 text-black py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105'>Delete</button>
                    </div>
                 </div>
             </Modal>
@@ -258,26 +267,45 @@ const AdminPage = () => {
                    <div className='flex flex-col'>
                     <label>Input Seller Id</label>
                     <input type="text" onChange={(e) => setId(e.target.value)} placeholder='ID' className='w-100 p-5'/>
-                    <button onClick={() => deleteUser()} className='mt-10 w-100 bg-red-600 hover:bg-red-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105'>Delete</button>
+                    <button onClick={() => deleteUser()} className='mt-10 w-100 bg-red-600 hover:bg-red-700 text-black py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105'>Delete</button>
                    </div>
                 </div>
             </Modal>
             <Modal 
-            isOpen={deleteProductModal}
-            onRequestClose={() => setDeleteProductModalOpen(false)}
-            className="modal"
-            overlayClassName="overlay"
-            ariaHideApp={false}
-            >
-                <div className="modal-container">
-                    <button onClick={() => setDeleteProductModalOpen(false)} className="close-button">Close</button>
-                   <div className='flex flex-col'>
-                    <label>Input Seller Id</label>
-                    <input type="text" onChange={(e) => setId(e.target.value)} placeholder='ID' className='w-100 p-5'/>
-                    <button onClick={() => deleteProducts()} className='mt-10 w-100 bg-red-600 hover:bg-red-700 text-white py-4 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105'>Delete</button>
-                   </div>
-                </div>
-            </Modal>
+    isOpen={deleteProductModal}
+    onRequestClose={() => setDeleteProductModalOpen(false)}
+    className="modal"
+    overlayClassName="overlay"
+    ariaHideApp={false}
+>
+    <div className="flex flex-col items-center h-full overflow-y-auto">
+        <h2 className="text-xl font-semibold mb-4">All Products</h2>
+        <div className="max-h-80 overflow-y-auto">
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <>
+                    {Array.isArray(showAllProductsModal.products) && showAllProductsModal.products.map((product, index) => (
+                        <div key={index} className="w-full max-w-md rounded overflow-hidden shadow-lg mb-4">
+                            <div className="px-6 py-4">
+                                <div className="font-bold text-xl mb-2">{product.name}</div>
+                                <p className="text-gray-700 text-base">Product ID: {product._id}</p>
+                            </div>
+                            <div className="px-6 py-4 flex justify-evenly">
+                                <button onClick={() =>  deleteProducts(product._id)} 
+                                className="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded">Delete</button>
+                                <button onClick={() => setDeleteProductModalOpen(false)} 
+                                className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded">Close</button>
+                            </div>
+                        </div>
+                    ))}
+                </>
+            )}
+        </div>
+    </div>
+</Modal>
+
+
             <Modal
                 isOpen={messageModel}
                 onRequestClose={() => setMessageModel(false)}
