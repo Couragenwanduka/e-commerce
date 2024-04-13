@@ -55,9 +55,10 @@ function FORM(){
 
             setSuccessMessage(response.data.message);
             setIsOpen(true);
-            setTimeout(() => {
+            if(response.status === 200){
                 window.location.href='/sign-in';
-            }, 2000);
+            }
+               
         } catch (error) {
             setIsOpen(true);
             setErrorMessage(error.response.data.message);
