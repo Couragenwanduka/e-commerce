@@ -30,7 +30,7 @@ const handleSubmit=async(e)=>{
     e.preventDefault();
     try{
         const token = cookies.token;
-        const response= await axios.post('https://e-commerce-wr0e.onrender.com/registerSeller',{
+        const response= await axios.post('http://localhost:5740/registerSeller',{
             name,
             password,
             companyName,

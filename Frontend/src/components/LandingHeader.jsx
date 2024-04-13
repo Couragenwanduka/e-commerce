@@ -12,7 +12,7 @@ function LANDINGHeader() {
     const handleOnSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://e-commerce-wr0e.onrender.com/searchProducts', {
+            const response = await axios.post('http://localhost:5740/searchProducts', {
                 name: searchInput
             });
             // Handle the response here

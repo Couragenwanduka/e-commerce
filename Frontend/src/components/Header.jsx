@@ -35,63 +35,61 @@ function Header({ onSearchResults }) {
         setSearchInput(e.target.value);
     };
 
-    const handleOnSubmit = async(e) =>{
+    const handleOnSubmit = async (e) => {
         e.preventDefault()
-        try{
-            const response= await axios.post('https://e-commerce-wr0e.onrender.com/searchProducts',{
-                name:searchInput
+        try {
+            const response = await axios.post('http://localhost:5740/searchProducts', {
+                name: searchInput
             })
             onSearchResults(response.data.products);
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
     }
 
-    return (
-        <div className="flex flex-col md:flex-row bg-blue-800 items-center py-4 px-4 md:py-0 md:px-10">
-            <div className="flex items-center justify-between w-full md:w-auto">
-                <h1 className="text-2xl font-mono text-white">MarketMate</h1>
-                <button onClick={handleOptionSelect} className="text-white md:hidden">My Account ^</button>
+    return (<>
+    
+   
+        <div className="flex justify-between items-center bg-blue-800 text-white py-4 px-8" >
+        <h1 className="text-2xl font-mono">MarketMate</h1>
+          
+            <form className="relative" onSubmit={handleOnSubmit}>
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    className="w-64 h-10 pl-2 pr-10 rounded-lg focus:outline-none border border-gray-300"
+                    onChange={handleSearchInputChange}
+                />
+                <button className="absolute right-0 top-0 h-full bg-white text-blue-800 px-4 rounded-r-lg border border-gray-300">Search</button>
+            </form>
+            <div className="flex items-center relative" >
+                <button onClick={handleOptionSelect} className="ml-4" >My Account</button>
+                {dropdownVisible && (
+                    <ul className='dropdown-menu absolute bg-white mt-2 p-2 rounded border border-gray-300 text-black'>
+                        {options.map(option => (
+                            <li key={option.value} className="dropdown-item">
+                                {option.path ? (
+                                    <Link to={option.path}>
+                                        <img src={option.image} alt={option.label} className="mr-2 w-6 h-6"  />
+                                        {option.label}
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <img src={option.image} alt={option.label} className="mr-2 w-6 h-6" />
+                                        {option.label}
+                                    </>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
-            {dropdownVisible && (
-                <ul className='dropdown-menu'>
-                    {options.map(option => (
-                        <li key={option.value} className="dropdown-item">
-                            {option.path ? (
-                                <Link to={option.path}>
-                                    <img src={option.image} alt={option.label} className="mr-2 w-6 h-6" />
-                                    {option.label}
-                                </Link>
-                            ) : (
-                                <>
-                                    <img src={option.image} alt={option.label} className="mr-2 w-6 h-6" />
-                                    {option.label}
-                                </>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            )}
-            <div className="flex flex-col md:flex-row items-center justify-between w-full md:w-auto mt-4 md:mt-0">
-                <form className="relative mb-4 md:mb-0" onSubmit={handleOnSubmit}>
-                    <input 
-                        type="text" 
-                        placeholder="Search..." 
-                        className="w-full md:w-96 h-10 pl-2 pr-10 rounded-lg focus:outline-none border border-gray-300" 
-                        onChange={handleSearchInputChange}
-                    />
-                    <button className="absolute right-2 top-0 h-full bg-white text-blue-800 px-4 rounded-r-lg border border-gray-300">Search</button>
-                </form>
-                <div className="flex items-center space-x-4 md:space-x-8">
-                    <button onClick={handleOptionSelect1} className="text-white flex items-center md:hidden">
-                        <img src="help.png" alt="help" className="mr-2 w-6 h-6"/>
-                        HELP
-                    </button>
-                    <Link to={'/cart'} className="hidden md:flex items-center text-white">
-                        <img src="cart.png" alt="cart" className="w-6 h-6" />
-                        <span className="ml-2">Cart</span>
-                    </Link>
-                </div>
+            <div className="flex items-center space-x-4">
+                {/* <button onClick={handleOptionSelect1} className="hidden md:block">HELP</button> */}
+                <Link to={'/cart'} className="flex items-center">
+                    <img src="cart.png" alt="cart" className="w-6 h-6" />
+                    <span className="ml-2">Cart</span>
+                </Link>
             </div>
             {dropdown && (
                 <ul className='dropdown-menu'>
@@ -103,6 +101,7 @@ function Header({ onSearchResults }) {
                 </ul>
             )}
         </div>
+        </>
     );
 }
 

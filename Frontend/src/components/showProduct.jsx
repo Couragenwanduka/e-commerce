@@ -36,7 +36,7 @@ const SHOWALLPRODUCTS = ({ products: initialProducts }) => {
         const fetchData = async () => {
             try {
                 const token = cookies.token;
-                const response = await axios.get('https://e-commerce-wr0e.onrender.com/getAllProducts', {
+                const response = await axios.get('http://localhost:5740/getAllProducts', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -86,7 +86,7 @@ const SHOWALLPRODUCTS = ({ products: initialProducts }) => {
            
             const token = cookies.token;
             // console.log(modalProduct._id, quantity,modalProduct.price)
-            const response = await axios.post('https://e-commerce-wr0e.onrender.com/addToCart', {
+            const response = await axios.post('http://localhost:5740/addToCart', {
                 productId: modalProduct._id,
                 quantity: quantities[modalProduct._id] || 1,
                 price: modalProduct.price,

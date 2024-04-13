@@ -47,7 +47,7 @@ function FORM(){
         e.preventDefault();
 
         try {
-            const response = await axios.post('https://e-commerce-wr0e.onrender.com/register', {
+            const response = await axios.post('http://localhost:5740/register', {
                 name: name,
                 email: email,
                 password: password
