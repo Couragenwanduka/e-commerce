@@ -22,7 +22,7 @@ const AdminPage = () => {
     const fetchData = async () => {
         try {
             const token = cookies.token;
-            const response = await axios.get('http://localhost:5740/getallusers', {
+            const response = await axios.get('https://e-commerce-wr0e.onrender.com/getallusers', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
@@ -39,7 +39,7 @@ const AdminPage = () => {
     const fetchSellers= async()=>{
         try{
             const token = cookies.token;
-            const response= await axios.get('http://localhost:5740/getallsellers', {
+            const response= await axios.get('https://e-commerce-wr0e.onrender.com/getallsellers', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
@@ -56,7 +56,7 @@ const AdminPage = () => {
     const deleteSeller = async () => {
         try {
             const token = cookies.token;
-            const response = await axios.delete(`http://localhost:5740/deleteseller/${_id}`, {
+            const response = await axios.delete(`https://e-commerce-wr0e.onrender.com/deleteseller/${_id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
@@ -74,7 +74,7 @@ const AdminPage = () => {
     const deleteUser = async () => {
         try {
             const token = cookies.token;
-            const response = await axios.delete(`http://localhost:5740/deleteUser/${_id}`, {
+            const response = await axios.delete(`https://e-commerce-wr0e.onrender.com/deleteUser/${_id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
@@ -91,7 +91,7 @@ const AdminPage = () => {
 
       const showAllProducts= async()=>{
         try{
-            const response= await axios.get('http://localhost:5740/getallproducts');
+            const response= await axios.get('https://e-commerce-wr0e.onrender.com/getallproducts');
            
             setShowAllProductsModalOpen(response.data)
         }catch(error){
@@ -102,7 +102,7 @@ const AdminPage = () => {
     const deleteProducts= async(productid)=>{
         try{
             const token = cookies.token;
-            const response= await axios.delete(`http://localhost:5740/deleteProduct/${productid}`, {
+            const response= await axios.delete(`https://e-commerce-wr0e.onrender.com/deleteProduct/${productid}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },

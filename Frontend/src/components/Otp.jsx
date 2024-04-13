@@ -16,7 +16,7 @@ const OTP = () => {
         e.preventDefault();
         try {
             const token = cookies.token; // Get the token from cookies
-            const response = await axios.post('http://localhost:5740/validateOtp', {
+            const response = await axios.post('https://e-commerce-wr0e.onrender.com/validateOtp', {
                 otp,
             },
             {

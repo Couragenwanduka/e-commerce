@@ -46,7 +46,7 @@ function FORM(){
 
         try {
             // Make a POST request to your API endpoint using async/await
-            const response = await axios.post('http://localhost:5740/register', {
+            const response = await axios.post('https://e-commerce-wr0e.onrender.com/register', {
                 name: name,
                 email: email,
                 password: password

@@ -84,7 +84,7 @@ const PRODUCTPAGE = () => {
     formData.append('images', image5);
        try{
         const token = cookies.token;
-        const response= await axios.post('http://localhost:5740/uploadProducts',formData,{
+        const response= await axios.post('https://e-commerce-wr0e.onrender.com/uploadProducts',formData,{
             headers: {
                 Authorization: `Bearer ${token}`
             },withCredentials: true
