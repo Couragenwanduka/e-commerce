@@ -56,7 +56,7 @@ function FORM(){
             setSuccessMessage(response.data.message);
             setIsOpen(true);
             if(response.status === 200){
-                window.location.href='https://e-commerce-wr0e.onrender.com/sign-in';
+                window.location.href='/sign-in';
             }
                
         } catch (error) {
