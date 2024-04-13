@@ -28,11 +28,11 @@ const OTP = () => {
 
             setSuccessMessage(response.data.message);
             setErrorMessage(response.data.error);
-            setTimeout(() => {
+            
                 if (response.status === 200) {
                     window.location.href = '/seller-Registration';
                 }
-            }, 2000);
+            
         } catch (error) {
             console.log(error);
         }

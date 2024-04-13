@@ -50,11 +50,11 @@ const EmailForm= ()=>{
          setCookie('token', token, { path: '/' });
         
          
-         setTimeout(()=>{
+         
             if(response.status === 200){
                 window.location.href='/otp-verification'
             }
-         },5000)
+         
         }catch(error){
             setErrorMessage(response.data.error);
             setIsOpen(true);
