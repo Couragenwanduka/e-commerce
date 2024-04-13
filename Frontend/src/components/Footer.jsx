@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
+
 function FOOTER() {
     return (
-        <div className="bg-purple-950 w-full py-8 text-white">
+        <div className="bg-purple-950 py-8 text-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-wrap justify-center -mx-4">
                     <div className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
@@ -39,7 +40,7 @@ function FOOTER() {
                             <li>MM Return Policy</li>
                         </ul>
                         <Link to={'/email-verification'}>
-                        <button className="mt-4 bg-white text-purple-950 py-2 px-4 rounded-full font-semibold">Become a Seller</button>
+                            <button className="mt-4 bg-white text-purple-950 py-2 px-4 rounded-full font-semibold block w-full">Become a Seller</button>
                         </Link>
                     </div>
                 </div>

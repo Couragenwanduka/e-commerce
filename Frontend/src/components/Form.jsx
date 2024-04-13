@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal'
+import Modal from 'react-modal';
 import axios from 'axios'; 
+
 const customStyles = {
     content: {
         top: '50%',
@@ -13,14 +14,15 @@ const customStyles = {
         padding: '30px',
         borderRadius: '10px',
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
-        width: '400px',
-        maxWidth: '90%',
+        width: '90%',
+        maxWidth: '400px',
         textAlign: 'center'
     },
     overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
     }
 };
+
 function FORM(){
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -45,65 +47,71 @@ function FORM(){
         e.preventDefault();
 
         try {
-            // Make a POST request to your API endpoint using async/await
             const response = await axios.post('https://e-commerce-wr0e.onrender.com/register', {
                 name: name,
                 email: email,
                 password: password
             });
 
-            // Handle success response
-           
             setSuccessMessage(response.data.message);
-            setErrorMessage(response.data.error)
             setIsOpen(true);
-            setTimeout(()=>{
+            setTimeout(() => {
                 window.location.href='/sign-in';
-            },2000)
+            }, 2000);
         } catch (error) {
             setIsOpen(true);
-        setErrorMessage(error.response.data.message)
+            setErrorMessage(error.response.data.message);
         }
     };
 
     return (
-        <div className="shadow-md shadow-black bg-zinc-500 p-8">
-            <h1 className="mt-10 text-xl antialiased font-bold text-gray-800 ml-20">Register</h1>
-            <form className="flex flex-col mt-10" onSubmit={handleSubmit}>
-                <label className="ml-96 w-80 border-black">NAME</label>
-                <input
-                    type={'text'}
-                    placeholder="Enter your name"
-                    className="ml-96 w-80 border-gray-500 p-3 rounded border-2"
-                    value={name}
-                    onChange={handleNameChange}
-                />
-                <label className="ml-96 w-80 border-black">EMAIL</label>
-                <input
-                    type={'email'}
-                    placeholder="Enter your email"
-                    className="ml-96 w-80 border-gray-500 p-3 rounded border-2"
-                    value={email}
-                    onChange={handleEmailChange}
-                />
-                <label className="ml-96 w-80 border-black">Password</label>
-                <input
-                    type={'password'}
-                    placeholder="Enter your password"
-                    className="ml-96 w-80 border-gray-500 p-3 rounded border-2"
-                    value={password}
-                    onChange={handlePasswordChange}
-                />
-                <button type="submit" className="p-4 mt-3 bg-amber-500 w-32 ml-96">Submit</button>
-                <p>if you have an account <a> Click to Login</a></p>
+        <div className="shadow-md bg-zinc-500 p-8 md:p-10">
+            <h1 className="text-2xl font-bold text-gray-800 text-center mb-8 md:mb-10">Register</h1>
+            <form onSubmit={handleSubmit}>
+                <div className="flex flex-col mb-6">
+                    <label htmlFor="name" className="text-sm">NAME</label>
+                    <input
+                        id="name"
+                        type={'text'}
+                        placeholder="Enter your name"
+                        className="w-full border border-gray-500 p-3 rounded"
+                        value={name}
+                        onChange={handleNameChange}
+                    />
+                </div>
+                <div className="flex flex-col mb-6">
+                    <label htmlFor="email" className="text-sm">EMAIL</label>
+                    <input
+                        id="email"
+                        type={'email'}
+                        placeholder="Enter your email"
+                        className="w-full border border-gray-500 p-3 rounded"
+                        value={email}
+                        onChange={handleEmailChange}
+                    />
+                </div>
+                <div className="flex flex-col mb-6">
+                    <label htmlFor="password" className="text-sm">Password</label>
+                    <input
+                        id="password"
+                        type={'password'}
+                        placeholder="Enter your password"
+                        className="w-full border border-gray-500 p-3 rounded"
+                        value={password}
+                        onChange={handlePasswordChange}
+                    />
+                </div>
+                <button type="submit" className="p-4 bg-amber-500 w-full rounded text-white">Submit</button>
             </form>
+            <p className="text-center mt-4">if you have an account <a href="/sign-in" className="text-blue-500">Click to Login</a></p>
             <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={() => setIsOpen(false)}
-            style={customStyles}
-            contentLabel="Example Modal">
+                isOpen={modalIsOpen}
+                onRequestClose={() => setIsOpen(false)}
+                style={customStyles}
+                contentLabel="Example Modal"
+            >
                 <div>
-                <button onClick={() => setIsOpen(false)} className="bg-black text-base text-white font-medium">close</button>
+                    <button onClick={() => setIsOpen(false)} className="bg-black text-base text-white font-medium">Close</button>
                     {successMessage && <div className="text-black text-5xl font-sans font-medium">{successMessage}</div>}
                     {errorMessage && <div className="text-black text-5xl font-sans font-medium">{errorMessage}</div>}
                 </div>

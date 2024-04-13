@@ -17,7 +17,7 @@ import UserDisplay from './pages/UserAccountPage.jsx';
         <BrowserRouter>
         <Routes>
             <Route path="/" >
-                <Route path="/" element={<App/>}/>
+                <Route path="/" element={<Lp/>}/>
                  <Route path="/Loggedin" element={<App/>}/>
                 <Route path="/sign-up" element={<Signup />} />
                 <Route path="/sign-in" element={<Signin />} />
