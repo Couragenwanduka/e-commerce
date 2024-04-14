@@ -64,7 +64,7 @@ function LOGINFORM(){
                  setChoices(true)
             }if(asUser){
                 // window.location.href='/Loggedin'
-                history.push('/Loggedin');
+                history.push('/product');
             }else if(asSeller){
                 window.location.href='/product'
             }else if(response.data.user.role== 'admin'){
