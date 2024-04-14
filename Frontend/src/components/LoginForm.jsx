@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import Modal from 'react-modal';
 import { useCookies } from 'react-cookie';
+import { useHistory } from 'react-router-dom';
 const customStyles = {
     content: {
         top: '50%',
@@ -33,7 +34,7 @@ function LOGINFORM(){
     const [choices, setChoices]= useState(false);
     const [asUser, setAsUser] = useState(false);
     const [asSeller, setAsSeller] = useState(false);
-   
+    const history = useHistory();
 
     const handleEmailChange=(e)=>{
         setEmail(e.target.value);
@@ -62,7 +63,8 @@ function LOGINFORM(){
             if(response.data.role == 'seller&user'){
                  setChoices(true)
             }if(asUser){
-                window.location.href='/Loggedin'
+                // window.location.href='/Loggedin'
+                history.push('/sign-in');
             }else if(asSeller){
                 window.location.href='/product'
             }else if(response.data.user.role== 'admin'){
