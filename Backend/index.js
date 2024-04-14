@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: '*', // Allow requests from this origin
+    origin: 'https://e-commerce-chi-murex.vercel.app', // Allow requests from this origin
     credentials: true, // Allow credentials (cookies) to be sent
   }));
 
