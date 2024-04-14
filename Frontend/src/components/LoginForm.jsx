@@ -49,7 +49,9 @@ function LOGINFORM(){
          const response= await axios.post('https://e-commerce-wr0e.onrender.com/login',{
             email,
             password
-         })
+         }, {
+            withCredentials: true 
+        })
         
          setSuccessMessage(response.data.message);
          setErrorMessage(response.data.message);

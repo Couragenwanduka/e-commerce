@@ -61,7 +61,6 @@ export const registerSeller = async (req, res) => {
 
         try {
             payload = verifyCookie(token);
-            console.log(payload)
         } catch (error) {
             if (error.name === 'TokenExpiredError') {
                 return res.status(403).json({ message: "Token expired" });
