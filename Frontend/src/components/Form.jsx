@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const customStyles = {
     content: {
@@ -105,7 +106,9 @@ function FORM(){
                 </div>
                 <button type="submit" className="p-4 bg-amber-500 w-full rounded text-white">Submit</button>
             </form>
+            <Link to='/sign-in' >
             <p className="text-center mt-4">if you have an account <a href="/sign-in" className="text-blue-500">Click to Login</a></p>
+            </Link>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => setIsOpen(false)}

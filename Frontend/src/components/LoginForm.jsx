@@ -99,7 +99,7 @@ function LOGINFORM(){
                 onChange={handlePasswordChange}
                 />
                 <button type="submit" className="p-4 mt-3 bg-amber-500 w-32 ml-96">Submit</button>
-                <Link to={'/sign-in'}>
+                <Link to='/sign-up'>
                 <p>if you don't have an account <a> Click to Register</a></p>
                 </Link>
                 
