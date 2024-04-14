@@ -42,7 +42,7 @@ const UserDisplayPage = () => {
         const token= cookies.token;
         console.log(token);
        event.preventDefault();
-       const response = await axios.get('http://localhost:5740/getUserInfo',{
+       const response = await axios.get('https://e-commerce-wr0e.onrender.com/getUserInfo',{
         headers: {
             Authorization: `Bearer ${token}` // Add the token to the request headers
         },
