@@ -64,7 +64,7 @@ function LOGINFORM(){
                  setChoices(true)
             }if(asUser){
                 // window.location.href='/Loggedin'
-                navigate('https://e-commerce-frontend-weld-chi.vercel.app/product');
+                navigate('https://e-commerce-frontend-weld-chi.vercel.app/Loggedin');
             }else if(asSeller){
                 window.location.href='/product'
             }else if(response.data.user.role== 'admin'){
