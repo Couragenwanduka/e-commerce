@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: 'http://localhost:5173', // Allow requests from this origin
+    origin: 'https://e-commerce-omega-sandy.vercel.app', // Allow requests from this origin
     credentials: true, // Allow credentials (cookies) to be sent
   }));
 

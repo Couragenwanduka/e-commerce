@@ -14,7 +14,7 @@ import UserDisplay from './pages/UserAccountPage.jsx';
 
  function ROUTER() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/">
         <Routes>
             <Route path="/" >
                 <Route path="/" element={<Lp/>}/>
