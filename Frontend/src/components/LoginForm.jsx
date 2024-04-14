@@ -70,7 +70,8 @@ function LOGINFORM(){
             }else if(response.data.user.role== 'admin'){
                 window.location.href='/admin'
             }else{
-                window.location.href='/Loggedin'
+                navigate('/Loggedin');
+                // window.location.href='/Loggedin'
             }
         
         }catch(error){
