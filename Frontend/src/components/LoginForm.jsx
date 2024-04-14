@@ -66,10 +66,8 @@ function LOGINFORM(){
                 navigate('/Loggedin');
             }else if(asSeller){
                 navigate('/product');
-                window.location.href='/product'
             }else if(response.data.user.role== 'admin'){
                 navigate('/admin');
-                window.location.href='/admin'
             }else{
                 navigate('/Loggedin');
              

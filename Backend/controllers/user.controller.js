@@ -54,8 +54,12 @@ export const loginUser = async (req, res) => {
            const isSellerMatch= await comparePassword(password,seller)
            if(isUserMatch || isSellerMatch){
             const payload = { user };
+            const cookieOptions = {
+                httpOnly: true,
+                domain: 'https://e-commerce-chi-murex.vercel.app', 
+            };
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
-            res.cookie('token', token, { httpOnly: true });
+            res.cookie('token', token, cookieOptions);
             return res.status(200).json({ message: "user logged in successfully",role ,user, token });
            }
         }else if (user) {
@@ -64,7 +68,11 @@ export const loginUser = async (req, res) => {
             if (isMatch) {
                 const payload = { user };
                 const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
-                res.cookie('token', token, { httpOnly: true });
+                const cookieOptions = {
+                    httpOnly: true,
+                    domain: 'https://e-commerce-chi-murex.vercel.app', 
+                };
+                res.cookie('token', token, cookieOptions);
                 return res.status(200).json({ message: "User logged in successfully", role,user, token });
             }
         } else if (seller) {
@@ -73,7 +81,11 @@ export const loginUser = async (req, res) => {
             if (isMatch) {
                 const payload = { seller };
                 const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
-                res.cookie('token', token, { httpOnly: true });
+                const cookieOptions = {
+                    httpOnly: true,
+                    domain: 'https://e-commerce-chi-murex.vercel.app', 
+                };
+                res.cookie('token', token, cookieOptions);
                 return res.status(200).json({ message: "Seller logged in successfully", role,seller, token });
             }
         }
