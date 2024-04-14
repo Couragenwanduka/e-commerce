@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useCookies } from 'react-cookie';
+import { useNavigate } from "react-router-dom";
+
 const REGISTERSELLER = () => {
 const [name, setName]=useState('')
 const [password, setPassword]=useState('')
@@ -9,6 +11,7 @@ const [companyAddress, setCompanyAddress]=useState('')
 const [cookies]= useCookies(['token'])
 const [successMessage, setSuccessMessage] = useState('');
 const [errorMessage, setErrorMessage] = useState('');
+const navigate = useNavigate();
 
 const handleNameChange=(e) => {
     setName(e.target.value)
@@ -30,7 +33,7 @@ const handleSubmit=async(e)=>{
     e.preventDefault();
     try{
         const token = cookies.token;
-        const response= await axios.post('http://localhost:5740/registerSeller',{
+        const response= await axios.post('https://e-commerce-wr0e.onrender.com/registerSeller',{
             name,
             password,
             companyName,
@@ -47,7 +50,7 @@ const handleSubmit=async(e)=>{
     
         setTimeout(()=>{
            if(response.status==200){
-            window.location.href='/sign-in'
+            navigate('/sign-in');
            }
         },2000)
     }catch(error){

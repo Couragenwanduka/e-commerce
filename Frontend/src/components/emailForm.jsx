@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import Modal from 'react-modal'
+import { useNavigate } from "react-router-dom";
 const customStyles = {
     content: {
         top: '50%',
@@ -28,6 +29,7 @@ const EmailForm= ()=>{
     const [errorMessage, setErrorMessage]=useState('');
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
     const [modalIsOpen,setIsOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleEmailChange=(e)=>{
        setEmail(e.target.value)
@@ -36,7 +38,7 @@ const EmailForm= ()=>{
     const handleSubmit=async(e)=>{
         e.preventDefault()
         try{
-         const response= await axios.post('http://localhost:5740/validateEmail',{
+         const response= await axios.post('https://e-commerce-wr0e.onrender.com/validateEmail',{
             email
          })
         
@@ -52,7 +54,7 @@ const EmailForm= ()=>{
          
          
             if(response.status === 200){
-                window.location.href='/otp-verification'
+                navigate('/otp-verification')
             }
          
         }catch(error){

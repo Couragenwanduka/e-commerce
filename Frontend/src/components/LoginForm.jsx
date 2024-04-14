@@ -46,7 +46,7 @@ function LOGINFORM(){
     const handleSubmit=async(e)=>{
         e.preventDefault();
         try{
-         const response= await axios.post('http://localhost:5740/login',{
+         const response= await axios.post('https://e-commerce-wr0e.onrender.com/login',{
             email,
             password
          })
@@ -63,15 +63,16 @@ function LOGINFORM(){
             if(response.data.role == 'seller&user'){
                  setChoices(true)
             }if(asUser){
-                // window.location.href='/Loggedin'
-                navigate('/product');
+                navigate('/Loggedin');
             }else if(asSeller){
+                navigate('/product');
                 window.location.href='/product'
             }else if(response.data.user.role== 'admin'){
+                navigate('/admin');
                 window.location.href='/admin'
             }else{
                 navigate('/Loggedin');
-                // window.location.href='/Loggedin'
+             
             }
         
         }catch(error){

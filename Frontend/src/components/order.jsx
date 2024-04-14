@@ -23,7 +23,7 @@ const OrderPage = () => {
         const fetchData = async () => {
             try {
                 const token = cookies.token;
-                const response = await axios.get('http://localhost:5740/showorder', {
+                const response = await axios.get('https://e-commerce-wr0e.onrender.com/showorder', {
                     headers: {
                         Authorization: `Bearer ${token}` // Add the token to the request headers
                     },
@@ -70,7 +70,7 @@ const OrderPage = () => {
     
     const removeFromCart= async (product) => {
         try{
-         const response = await axios.delete(`http://localhost:5740/deleteorder/${product._id}`)
+         const response = await axios.delete(`https://e-commerce-wr0e.onrender.com/deleteorder/${product._id}`)
          if(response.status==200){
             window.location.reload();
          }
@@ -85,7 +85,7 @@ const OrderPage = () => {
         e.preventDefault();
         try{
             const token = cookies.token;
-            const response = await axios.post('http://localhost:5740/saveorder', {formData, products,totalPrice},{
+            const response = await axios.post('https://e-commerce-wr0e.onrender.com/saveorder', {formData, products,totalPrice},{
                 headers: {
                     Authorization: `Bearer ${token}` // Add the token to the request headers
                 },

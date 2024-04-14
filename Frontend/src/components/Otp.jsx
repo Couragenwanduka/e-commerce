@@ -1,12 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import { useCookies } from 'react-cookie';
+import { useNavigate } from "react-router-dom";
 
 const OTP = () => {
     const [otp, setOtp] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [cookies] = useCookies(['token']); // Retrieve the token from cookies
+    const navigate = useNavigate();
 
     const handleOtpChange = (e) => {
         setOtp(e.target.value);
@@ -16,7 +18,7 @@ const OTP = () => {
         e.preventDefault();
         try {
             const token = cookies.token; // Get the token from cookies
-            const response = await axios.post('http://localhost:5740/validateOtp', {
+            const response = await axios.post('https://e-commerce-wr0e.onrender.com/validateOtp', {
                 otp,
             },
             {
@@ -30,7 +32,7 @@ const OTP = () => {
             setErrorMessage(response.data.error);
             
                 if (response.status === 200) {
-                    window.location.href = '/seller-Registration';
+                    navigate('/seller-Registration');
                 }
             
         } catch (error) {

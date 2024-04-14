@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios'; 
+import { useNavigate } from 'react-router-dom';
 
 const customStyles = {
     content: {
@@ -30,7 +31,7 @@ function FORM(){
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [modalIsOpen,setIsOpen] = useState(false);
-
+    const navigate = useNavigate();
     const handleNameChange = (e) => {
         setName(e.target.value);
     };
@@ -47,7 +48,7 @@ function FORM(){
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:5740/register', {
+            const response = await axios.post('https://e-commerce-wr0e.onrender.com/register', {
                 name: name,
                 email: email,
                 password: password
@@ -56,7 +57,7 @@ function FORM(){
             setSuccessMessage(response.data.message);
             setIsOpen(true);
             if(response.status === 200){
-                window.location.href='/sign-in';
+                navigate('/sign-in');
             }
                
         } catch (error) {

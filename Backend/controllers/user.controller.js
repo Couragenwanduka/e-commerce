@@ -111,6 +111,7 @@ export const deleteAUserById= async(req, res) =>{
 export const getUser= async(req, res) =>{
     try{
     const {token}= req.cookies;
+    console.log(token)
     if(!token){
      return res.status(401).json({message:"please login"})
     }
