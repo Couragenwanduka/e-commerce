@@ -27,8 +27,12 @@ export const validateEmail = async(req,res) =>{
 export const validateOtp= async(req,res)=>{
     try{
        const {otp}=req.body;
-       const token= req.cookies.token;
-       if(!token){
+       const authHeader=req.headers.authorization;
+       if(!authHeader){
+        return res.status(401).json({message:"try again"})
+       }
+       const [bearer,token] = authHeader.split(" ");
+       if(bearer !=='Bearer' && !token){
         return res.status(401).json({message:"try again"})
        }
        const payload= verifyCookie(token)
@@ -48,7 +52,14 @@ export const validateOtp= async(req,res)=>{
 
 export const registerSeller = async (req, res) => {
     try {
-        const token = req.cookies.token;
+        const authHeader=req.headers.authorization;
+       if(!authHeader){
+        return res.status(401).json({message:"try again"})
+       }
+       const [bearer,token] = authHeader.split(" ");
+       if(bearer !=='Bearer' && !token){
+        return res.status(401).json({message:"try again"})
+       }
         const { name, password, companyName, companyAddress } = req.body;
 
         // Validate schema

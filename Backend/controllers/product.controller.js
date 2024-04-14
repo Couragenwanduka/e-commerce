@@ -15,11 +15,15 @@ export const createProduct = async (req, res) => {
             }
             
             const { category, name, description, stock, price } = req.body;
-            const { token } = req.cookies; 
+           const authHeader=req.headers.authorization;
+            if(!authHeader){
+                return res.status(401).json({message:"try again"})
+            }
+            const [bearer,token] = authHeader.split(" ");
+            if(bearer !=='Bearer' && !token){
+                return res.status(401).json({message:"you need to login"})
+            }
        
-           if(!token) {
-            return res.status(400).json({ message: "You need to login " });
-           }
             const images = [];
           
             for (const file of req.files) {

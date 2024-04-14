@@ -5,7 +5,14 @@ import { findUserById} from '../services/user.service.js';
 
 export const addToCart = async (req, res) => {
     try {
-       const token = req.cookies.token;
+      const authHeader=req.headers.authorization;
+      if(!authHeader){
+       return res.status(401).json({message:"try again"})
+      }
+      const [bearer,token] = authHeader.split(" ");
+      if(bearer !=='Bearer' && !token){
+       return res.status(401).json({message:"please login "})
+      }
        const { productId,quantity,price,imageUrl,name} = req.body;
        const decoded = verifyCookie(token);
        if(!decoded){
@@ -33,7 +40,14 @@ export const addToCart = async (req, res) => {
 
 export const getCart = async(req, res) =>{
       try{
-      const token = req.cookies.token;
+        const authHeader=req.headers.authorization;
+        if(!authHeader){
+         return res.status(401).json({message:"try again"})
+        }
+        const [bearer,token] = authHeader.split(" ");
+        if(bearer !=='Bearer' && !token){
+         return res.status(401).json({message:"please login"})
+        }
       const decoded = verifyCookie(token);
       if(!decoded){
         return res.status(401).json({message:"Please login"})
@@ -52,7 +66,6 @@ export const getCart = async(req, res) =>{
 export const deleteCartItem = async(req, res) =>{
   try{
       const {_id}= req.params
-      console.log(_id)
       const vaild= await findCartById(_id)
       if(!vaild){
         return res.status(400).json({message:"Cart not found"})

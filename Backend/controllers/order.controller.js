@@ -7,7 +7,14 @@ import {alertSeller,getProduct } from '../helper/orderLogic.js';
 
 export const createOrder = async (req, res) => {
     try{
-        const token = req.cookies.token;
+        const authHeader=req.headers.authorization;
+       if(!authHeader){
+        return res.status(401).json({message:"try again"})
+       }
+       const [bearer,token] = authHeader.split(" ");
+       if(bearer !=='Bearer' && !token){
+        return res.status(401).json({message:"please login"})
+       }
         const {name,email,phonenumber,address,city,country,paymentMethod}=req.body.formData;
         const {products,totalPrice}=req.body;
         const decoded = verifyCookie(token);
@@ -35,7 +42,14 @@ export const createOrder = async (req, res) => {
 
 export const getOrderById = async (req, res) => {
     try{
-        const token = req.cookies.token;
+        const authHeader=req.headers.authorization;
+       if(!authHeader){
+        return res.status(401).json({message:"try again"})
+       }
+       const [bearer,token] = authHeader.split(" ");
+       if(bearer !=='Bearer' && !token){
+        return res.status(401).json({message:"please login"})
+       }
         const decoded = verifyCookie(token);
         if(!decoded){
             return res.status(401).json({message:"Please login"})
