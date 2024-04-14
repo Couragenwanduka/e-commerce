@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Modal from 'react-modal';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const customStyles = {
     content: {
         top: '50%',
@@ -98,7 +99,10 @@ function LOGINFORM(){
                 onChange={handlePasswordChange}
                 />
                 <button type="submit" className="p-4 mt-3 bg-amber-500 w-32 ml-96">Submit</button>
+                <Link to={'/sign-in'}>
                 <p>if you don't have an account <a> Click to Register</a></p>
+                </Link>
+                
                 {successMessage&&<div className="ml-96 text-green-600">{successMessage}</div>}
                 {errorMessage&&<div className="ml-96 text-green-600">{errorMessage}</div>}
             </form>
