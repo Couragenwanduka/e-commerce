@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: 'https://e-commerce-frontend-weld-chi.vercel.app', // Allow requests from this origin
+    origin: 'https://e-commerce-frontend-git-main-courages-projects-5a3b28f8.vercel.app', // Allow requests from this origin
     credentials: true, // Allow credentials (cookies) to be sent
   }));
 
