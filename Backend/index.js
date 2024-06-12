@@ -16,10 +16,21 @@ app.use(express.json());
 
 app.use(cookieParser());
 
+const allowedOrigins = [
+  'https://e-commerce-chi-murex.vercel.app',
+  'https://e-commerce-frontend-weld-chi.vercel.app'
+];
+
 app.use(cors({
-    origin: ['https://e-commerce-chi-murex.vercel.app','https://e-commerce-frontend-weld-chi.vercel.app/'], // Allow requests from this origin
-    credentials: true, // Allow credentials (cookies) to be sent
-  }));
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Allow credentials (cookies) to be sent
+}));
 
 app.use(express.urlencoded({ extended: true }));
 
